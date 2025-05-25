@@ -1,9 +1,9 @@
 -- Usuários
-INSERT INTO USUARIO (nome, email, senha) VALUES ('João Silva', 'joao.silva@example.com', '123456');
-INSERT INTO USUARIO (nome, email, senha) VALUES ('Maria Oliveira', 'maria.oliveira@example.com', 'senhaSegura2025');
-INSERT INTO USUARIO (nome, email, senha) VALUES ('Carlos Souza', 'carlos.souza@example.com', 'abc123');
-INSERT INTO USUARIO (nome, email, senha) VALUES ('Ana Paula', 'ana.paula@example.com', 'minhaSenha2025');
-INSERT INTO USUARIO (nome, email, senha) VALUES ('Pedro Henrique', 'pedro.henrique@example.com', 'pedro@2025');
+INSERT INTO USUARIO (nome, email, senha, data_nascimento) VALUES ('João Silva', 'joao.silva@example.com', '123456', '1990-01-01');
+INSERT INTO USUARIO (nome, email, senha, data_nascimento) VALUES ('Maria Oliveira', 'maria.oliveira@example.com', 'senhaSegura2025', '1988-07-15');
+INSERT INTO USUARIO (nome, email, senha, data_nascimento) VALUES ('Carlos Souza', 'carlos.souza@example.com', 'abc123', '1995-03-22');
+INSERT INTO USUARIO (nome, email, senha, data_nascimento) VALUES ('Ana Paula', 'ana.paula@example.com', 'minhaSenha2025', '1992-11-05');
+INSERT INTO USUARIO (nome, email, senha, data_nascimento) VALUES ('Pedro Henrique', 'pedro.henrique@example.com', 'pedro@2025', '2000-09-10');
 
 -- Jogos
 INSERT INTO JOGO (nome, descricao, requisitos_sistema, desenvolvedor, publicador, genero, preco, imagem_url)

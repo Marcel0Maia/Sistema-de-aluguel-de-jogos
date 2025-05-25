@@ -216,3 +216,9 @@ Caused by: org.h2.jdbc.JdbcSQLNonTransientConnectionException: The connection wa
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
 	... 47 more
+2025-05-25 13:00:33.750238-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM USUARIO INFORMATION_SCHEMA[*].USERS"; SQL statement:
+SELECT * FROM USUARIO INFORMATION_SCHEMA.USERS [42000-232]
+2025-05-25 13:00:47.708893-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]INFORMATION_SCHEMA.SESSIONS"; expected "INSERT"; SQL statement:
+INFORMATION_SCHEMA.SESSIONS [42001-232]
