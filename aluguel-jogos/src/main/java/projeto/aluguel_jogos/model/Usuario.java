@@ -1,11 +1,12 @@
 package projeto.aluguel_jogos.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 
 @Entity
+@Table(name = "USUARIO")
 public class Usuario {
 
     @Id
@@ -13,9 +14,20 @@ public class Usuario {
     private Long id;
 
     private String nome;
+    @Column(unique = true)
     private String email;
     private String senha;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dataNascimento;
 
+    public Usuario() {}
+
+    public Usuario(String nome, String email, String senha, LocalDate dataNascimento) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.dataNascimento = dataNascimento;
+    }
     // Getters e Setters
 
     public Long getId() {
@@ -48,5 +60,13 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 }

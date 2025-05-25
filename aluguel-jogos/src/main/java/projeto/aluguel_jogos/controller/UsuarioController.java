@@ -6,6 +6,7 @@ import projeto.aluguel_jogos.model.Usuario;
 import projeto.aluguel_jogos.repository.UsuarioRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -27,6 +28,11 @@ public class UsuarioController {
     @GetMapping("/{id}")
     public Usuario buscarUsuario(@PathVariable Long id) {
         return usuarioRepository.findById(id).orElse(null);
+    }
+
+    @GetMapping("/{email}")
+    public Optional<Usuario> buscarUsuarioEmail(@PathVariable Long id, String email) {
+        return usuarioRepository.findByEmail(email);
     }
 
     @PutMapping("/{id}")
