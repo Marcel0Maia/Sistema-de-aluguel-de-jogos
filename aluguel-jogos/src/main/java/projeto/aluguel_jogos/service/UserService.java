@@ -51,4 +51,12 @@ public class UserService {
         }
         return usuario;
     }
+
+    public void alterarPermissaoAdmin(Long usuarioId, boolean novoValor) throws Exception {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new Exception("Usuário não encontrado"));
+
+        usuario.setAdmin(novoValor);
+        usuarioRepository.save(usuario);
+    }
 }
