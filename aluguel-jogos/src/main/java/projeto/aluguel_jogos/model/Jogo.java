@@ -2,7 +2,11 @@ package projeto.aluguel_jogos.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
+@Table(name = "JOGO")
 public class Jogo {
 
     @Id
@@ -17,10 +21,25 @@ public class Jogo {
     private String genero;
     private Double preco;
     private String imagemUrl;
+    private boolean emDestaque = false;
+    private boolean noCarrossel = false;
 
+    @ManyToMany(mappedBy = "jogos")
+    private List<Usuario> usuarios = new ArrayList<>();
 
     // Construtor vazio obrigatório
     public Jogo() {
+    }
+
+    public Jogo(String nome, String descricao , String requisitosSistema, String desenvolvedor, String publicador, String genero, Double preco, String imagemUrl) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.requisitosSistema = requisitosSistema;
+        this.desenvolvedor = desenvolvedor;
+        this.publicador = publicador;
+        this.genero = genero;
+        this.preco = preco;
+        this.imagemUrl = imagemUrl;
     }
 
     // Getters e Setters
@@ -88,6 +107,7 @@ public class Jogo {
     public void setPreco(Double preco) {
         this.preco = preco;
     }
+
     public String getImagemUrl() {
         return imagemUrl;
     }
@@ -95,5 +115,17 @@ public class Jogo {
     public void setImagemUrl(String imagemUrl) {
         this.imagemUrl = imagemUrl;
     }
+
+    public boolean isEmDestaque() { return emDestaque; }
+
+    public void setEmDestaque(boolean emDestaque) { this.emDestaque = emDestaque; }
+
+    public boolean isNoCarrossel() { return noCarrossel; }
+
+    public void setNoCarrossel(boolean noCarrossel) { this.noCarrossel = noCarrossel; }
+
+    public List<Usuario> getUsuarios() { return usuarios; }
+
+    public void setUsuarios(List<Usuario> usuarios) { this.usuarios = usuarios; }
 
 }
