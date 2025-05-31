@@ -58,15 +58,36 @@ public class LoginController {
     @PostMapping("/login")
     public String processLogin(@RequestParam String email,
                                @RequestParam String password,
-                               HttpSession session, RedirectAttributes redirectAttributes) throws Exception{
+                               HttpSession session,
+                               RedirectAttributes redirectAttributes) {
         try {
-            userService.usuarioValidarLogin(email, password);
-            return "redirect:/html/home.html";
+            Usuario usuario = userService.usuarioValidarLogin(email, password);
+            session.setAttribute("usuarioLogado", usuario); // Salva o usuário na sessão
+
+            // Redireciona conforme tipo de usuário
+            if (Boolean.TRUE.equals(usuario.getIsAdmin())) {
+                return "redirect:/html/admin.html"; // Vai para o painel admin se for admin
+            }
+
+            return "redirect:/html/home.html"; // Vai para a home se não for admin
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             return "redirect:/login?error=true";
         }
     }
+
+
+    @GetMapping("/admin")
+    public String painelAdmin(HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        if (usuario == null || !Boolean.TRUE.equals(usuario.getIsAdmin())) {
+            return "redirect:/login";
+        }
+
+
+        return "admin/painel"; // Esse é o HTML que será renderizado (admin/painel.html)
+    }
+
 
     @GetMapping("/home")
     public String showHomePage() {

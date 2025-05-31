@@ -82,7 +82,7 @@ public class Usuario {
         this.dataNascimento = dataNascimento;
     }
 
-    public boolean isAdmin() {
+    public boolean getIsAdmin() {
         return isAdmin;
     }
 

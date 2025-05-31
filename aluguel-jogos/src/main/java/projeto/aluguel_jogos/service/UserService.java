@@ -41,16 +41,17 @@ public class UserService {
      * @return O usuário autenticado.
      * @throws Exception Se o email não for encontrado ou a senha estiver incorreta.
      */
-    public Object usuarioValidarLogin(String email, String senha) throws Exception {
+    public Usuario usuarioValidarLogin(String email, String senha) throws Exception {
         Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new Exception("Usuário não encontrado."));
 
-        // Compara a senha fornecida com a senha armazenada
         if (!usuario.getSenha().equals(senha)) {
             throw new Exception("Senha incorreta.");
         }
+
         return usuario;
     }
+
 
     public void alterarPermissaoAdmin(Long usuarioId, boolean novoValor) throws Exception {
         Usuario usuario = usuarioRepository.findById(usuarioId)
