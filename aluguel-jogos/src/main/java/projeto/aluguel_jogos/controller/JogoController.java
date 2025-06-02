@@ -1,6 +1,7 @@
 package projeto.aluguel_jogos.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.bind.annotation.*;
 import projeto.aluguel_jogos.model.Jogo;
 import projeto.aluguel_jogos.repository.JogoRepository;

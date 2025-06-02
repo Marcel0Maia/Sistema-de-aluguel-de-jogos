@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -32,7 +31,7 @@ public class LoginController {
 
     @GetMapping("/cadastro")
     public String showCadastroPage() {
-        return "cadastro"; // "Retorna o nome do arquivo "
+        return "redirect:/html/cadastro.html"; // "Retorna o nome do arquivo "
     }
 
     @PostMapping("/cadastro")
@@ -52,7 +51,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String showLoginPage() {
-        return "login"; // "Retorna o nome do arquivo "
+        return "redirect:/html/login.html"; // "Retorna o nome do arquivo "
     }
 
     @PostMapping("/login")
@@ -62,10 +61,10 @@ public class LoginController {
                                RedirectAttributes redirectAttributes) {
         try {
             Usuario usuario = userService.usuarioValidarLogin(email, password);
-            session.setAttribute("usuarioLogado", usuario); // Salva o usuário na sessão
+            session.setAttribute("usuarioLogado", usuario);
 
             // Redireciona conforme tipo de usuário
-            if (Boolean.TRUE.equals(usuario.getIsAdmin())) {
+            if (usuario.getIsAdmin()) {
                 return "redirect:/html/admin.html"; // Vai para o painel admin se for admin
             }
 
@@ -80,12 +79,12 @@ public class LoginController {
     @GetMapping("/admin")
     public String painelAdmin(HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
-        if (usuario == null || !Boolean.TRUE.equals(usuario.getIsAdmin())) {
-            return "redirect:/login";
+        if (usuario == null || !usuario.getIsAdmin()) {
+            return "redirect:/login.html";
         }
 
 
-        return "admin/painel"; // Esse é o HTML que será renderizado (admin/painel.html)
+        return "redirect:/html/admin.html"; // Esse é o HTML que será renderizado (admin/painel.html)
     }
 
 

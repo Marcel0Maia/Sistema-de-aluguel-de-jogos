@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import projeto.aluguel_jogos.model.Jogo;
 import projeto.aluguel_jogos.repository.JogoRepository;
 
+import java.util.List;
+
 @Service
 public class JogoService {
 

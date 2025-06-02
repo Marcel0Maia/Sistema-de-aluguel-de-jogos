@@ -1,5 +1,6 @@
 package projeto.aluguel_jogos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -90,6 +91,7 @@ public class Usuario {
         isAdmin = admin;
     }
 
+    @JsonIgnore
     public List<Jogo> getJogos() {
         return jogos;
     }

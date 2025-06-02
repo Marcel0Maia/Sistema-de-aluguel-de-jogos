@@ -9,14 +9,14 @@ INSERT INTO USUARIO (nome, email, senha, data_nascimento, is_admin) VALUES ('Mar
 
 -- Jogos
 INSERT INTO JOGO (nome, descricao, requisitos_sistema, desenvolvedor, publicador, genero, preco, imagem_url, em_destaque, no_carrossel)
-VALUES ('The Witcher 3', 'RPG de mundo aberto', 'Intel i5, 8GB RAM, GTX 960', 'CD Projekt', 'CD Projekt', 'RPG', 99.90, 'https://meusite.com/imagens/the-witcher-3.jpg', false, false);
+VALUES ('The Witcher 3', 'RPG de mundo aberto', 'Intel i5, 8GB RAM, GTX 960', 'CD Projekt', 'CD Projekt', 'RPG', 99.90, 'https://i.imgur.com/wbiRWEB.jpeg', false, false);
 
 
 INSERT INTO JOGO (nome, descricao, requisitos_sistema, desenvolvedor, publicador, genero, preco, imagem_url, em_destaque, no_carrossel)
-VALUES ('Cyberpunk 2077', 'Futuro distópico em mundo aberto', 'Intel i7, 16GB RAM, RTX 2060', 'CD Projekt RED', 'CD Projekt RED', 'Ação/RPG', 199.90, 'https://meusite.com/imagens/cyberpunk-2077.jpg', false, false);
+VALUES ('Cyberpunk 2077', 'Futuro distópico em mundo aberto', 'Intel i7, 16GB RAM, RTX 2060', 'CD Projekt RED', 'CD Projekt RED', 'Ação/RPG', 199.90, '	https://i.imgur.com/DgPPLZU.jpeg', false, false);
 
 
 INSERT INTO JOGO (nome, descricao, requisitos_sistema, desenvolvedor, publicador, genero, preco, imagem_url, em_destaque, no_carrossel)
-VALUES ('Elden Ring', 'RPG de ação em mundo aberto', 'Intel i7, 16GB RAM, RTX 2070', 'FromSoftware', 'Bandai Namco', 'RPG de ação', 249.90, 'https://meusite.com/imagens/elden-ring.jpg', false, false);
+VALUES ('Elden Ring', 'RPG de ação em mundo aberto', 'Intel i7, 16GB RAM, RTX 2070', 'FromSoftware', 'Bandai Namco', 'RPG de ação', 249.90, 'https://i.imgur.com/08xsUd0.jpeg', false, false);
 
 
