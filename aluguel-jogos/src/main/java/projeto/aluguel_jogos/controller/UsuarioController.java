@@ -1,7 +1,10 @@
 package projeto.aluguel_jogos.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import projeto.aluguel_jogos.model.Usuario;
 import projeto.aluguel_jogos.repository.UsuarioRepository;
 
@@ -30,7 +33,6 @@ public class UsuarioController {
         return usuarioRepository.findById(id).orElse(null);
     }
 
-    @GetMapping("/{email}")
     public Optional<Usuario> buscarUsuarioEmail(@PathVariable Long id, String email) {
         return usuarioRepository.findByEmail(email);
     }
@@ -43,6 +45,17 @@ public class UsuarioController {
             usuario.setSenha(usuarioAtualizado.getSenha());
             return usuarioRepository.save(usuario);
         }).orElse(null);
+    }
+    @GetMapping("/usuario-logado")
+    public Usuario usuarioLogado(HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        System.out.println("Usuario na sessão no /usuario-logado: " + usuario);
+
+        if (usuario == null) {
+            System.out.println("Usuário não encontrado na sessão!");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuário não logado");
+        }
+        return usuario;
     }
 
     @DeleteMapping("/{id}")

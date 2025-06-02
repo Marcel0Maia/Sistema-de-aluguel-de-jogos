@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel Administrativo</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<header>
+    <h1>Painel Administrativo</h1>
+</header>
+
+<main>
+    <section class="usuarios">
+        <h2>Usuários</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Administrador</th>
+                <th>Jogos Vinculados</th>
+                <th>Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Exemplo (substituir com iteração no backend) -->
+            <tr>
+                <td>1</td>
+                <td>João Silva</td>
+                <td>joao@email.com</td>
+                <td><input type="checkbox" checked></td>
+                <td>Jogo A, Jogo B</td>
+                <td><button>Salvar</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="jogos">
+        <h2>Jogos</h2>
+        <button class="novo-jogo">+ Novo Jogo</button>
+        <table>
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Desenvolvedor</th>
+                <th>Gênero</th>
+                <th>Publicador</th>
+                <th>Requisitos</th>
+                <th>Destaque</th>
+                <th>Carrossel</th>
+                <th>Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Exemplo (substituir com iteração no backend) -->
+            <tr>
+                <td>Jogo Exemplo</td>
+                <td>Um jogo muito legal.</td>
+                <td>Dev Studio</td>
+                <td>Aventura</td>
+                <td>XYZ Games</td>
+                <td>4GB RAM, i5</td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox" checked></td>
+                <td><button>Salvar</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+</body>
+</html>
