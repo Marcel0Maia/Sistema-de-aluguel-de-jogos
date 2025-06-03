@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd7640d2-141e-4c5b-af4b-042258d3048b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/controller/JogoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/controller/JogoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/controller/UsuarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/controller/UsuarioController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/model/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/model/Usuario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/css/admin.css" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/css/admin.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/html/admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/html/admin.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/aluguel-jogos-db.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/aluguel-jogos-db.mv.db" afterDir="false" />
-    </list>
+    <list default="true" id="fd7640d2-141e-4c5b-af4b-042258d3048b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -104,6 +91,7 @@
       <workItem from="1748917529286" duration="336000" />
       <workItem from="1748918111612" duration="653000" />
       <workItem from="1748918788335" duration="3845000" />
+      <workItem from="1748923459710" duration="301000" />
     </task>
     <servers />
   </component>
