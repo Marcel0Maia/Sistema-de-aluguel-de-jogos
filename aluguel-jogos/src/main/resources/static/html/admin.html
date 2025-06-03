@@ -3,74 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <title>Painel Administrativo</title>
-    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
-<header>
-    <h1>Painel Administrativo</h1>
-</header>
-
-<main>
-    <section class="usuarios">
-        <h2>Usuários</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Administrador</th>
-                <th>Jogos Vinculados</th>
-                <th>Ação</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- Exemplo (substituir com iteração no backend) -->
-            <tr>
-                <td>1</td>
-                <td>João Silva</td>
-                <td>joao@email.com</td>
-                <td><input type="checkbox" checked></td>
-                <td>Jogo A, Jogo B</td>
-                <td><button>Salvar</button></td>
-            </tr>
-            </tbody>
-        </table>
-    </section>
-
-    <section class="jogos">
-        <h2>Jogos</h2>
-        <button class="novo-jogo">+ Novo Jogo</button>
-        <table>
-            <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Desenvolvedor</th>
-                <th>Gênero</th>
-                <th>Publicador</th>
-                <th>Requisitos</th>
-                <th>Destaque</th>
-                <th>Carrossel</th>
-                <th>Ação</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- Exemplo (substituir com iteração no backend) -->
-            <tr>
-                <td>Jogo Exemplo</td>
-                <td>Um jogo muito legal.</td>
-                <td>Dev Studio</td>
-                <td>Aventura</td>
-                <td>XYZ Games</td>
-                <td>4GB RAM, i5</td>
-                <td><input type="checkbox"></td>
-                <td><input type="checkbox" checked></td>
-                <td><button>Salvar</button></td>
-            </tr>
-            </tbody>
-        </table>
-    </section>
-</main>
+<div class="navbar">
+    <h2>Painel Administrativo</h2>
+    <div class="perfil-dropdown" id="perfil">
+        <a href="#">Perfil</a>
+        <div class="dropdown-menu">
+            <p id="usuario-nome">Olá, Usuário</p>
+            <a href="#">Ver perfil</a>
+            <button id="btnLogout">Logout</button>
+        </div>
+    </div>
+</div>
+<section class="usuarios">
+    <h2>Usuários</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Admin</th>
+            <th>Ação</th>
+        </tr>
+        </thead>
+        <tbody id="tabela-usuarios"></tbody>
+    </table>
+</section>
+<section class="jogos">
+    <h2>Jogos</h2>
+    <button onclick="abrirFormularioNovoJogo()">+ Novo Jogo</button>
+    <table>
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Desenvolvedor</th>
+            <th>Gênero</th>
+            <th>Publicador</th>
+            <th>Requisitos</th>
+            <th>Preço</th>
+            <th>Imagem URL</th>
+            <th>Destaque</th>
+            <th>Carrossel</th>
+            <th>Ação</th>
+        </tr>
+        </thead>
+        <tbody id="tabela-jogos"></tbody>
+    </table>
+</section>
+<div id="form-novo-jogo">
+    <div class="modal-content">
+        <button class="btn-fechar" onclick="fecharFormularioNovoJogo()" aria-label="Fechar
+modal">&times;</button>
+        <h3>Novo Jogo</h3>
+        <input type="text" id="nome" placeholder="Nome" required>
+        <input type="text" id="descricao" placeholder="Descrição" required>
+        <input type="text" id="desenvolvedor" placeholder="Desenvolvedor" required>
+        <input type="text" id="genero" placeholder="Gênero" required>
+        <input type="text" id="publicador" placeholder="Publicador" required>
+        <input type="text" id="requisitos" placeholder="Requisitos" required>
+        <input type="number" id="preco" placeholder="Preço" step="0.01" required>
+        <input type="text" id="imagemUrl" placeholder="URL da Imagem" required>
+        <label><input type="checkbox" id="emDestaque"> Destaque</label>
+        <label><input type="checkbox" id="noCarrossel"> Carrossel</label>
+        <button class="salvar-jogo" onclick="criarJogo()">Salvar</button>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+// Verifica login e busca nome do usuário
+        fetch('/usuarios/usuario-logado', { credentials: 'include' })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Não autenticado');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data) {
+                    document.getElementById('usuario-nome').textContent = `Olá,
+${data.nome}`;
+                }
+            })
+            .catch(() => {
+                window.location.href = '/html/login.html';
+            });
+// Logout
+        document.getElementById("btnLogout").addEventListener("click", () => {
+            fetch("/logout", {
+                method: "POST",
+                credentials: "include"
+            })
+                .then(() => {
+                    window.location.href = "/html/login.html";
+                })
+                .catch(console.error);
+        });
+// Dropdown de perfil
+        const perfil = document.getElementById('perfil');
+        perfil.addEventListener('click', () => perfil.classList.toggle('active'));
+        document.addEventListener('click', e => {
+            if (!perfil.contains(e.target)) perfil.classList.remove('active');
+        });
+        carregarUsuarios();
+        carregarJogos();
+    });
+    // Funções de usuários e jogos (mantidas iguais)
+    async function carregarUsuarios() {
+        const response = await fetch('/usuarios');
+        const usuarios = await response.json();
+        const tabela = document.getElementById('tabela-usuarios');
+        tabela.innerHTML = '';
+        usuarios.forEach(usuario => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+<td>${usuario.nome}</td>
+<td>${usuario.email}</td>
+<td><input type="checkbox" ${usuario.isAdmin ? 'checked' : ''}
+class="input-admin"></td>
+<td><button onclick="salvarUsuario(this,
+${usuario.id})">Salvar</button></td>
+`;
+            tabela.appendChild(tr);
+        });
+    }
+    async function salvarUsuario(button, id) {
+        const tr = button.closest('tr');
+        const isAdmin = tr.querySelector('.input-admin').checked;
+        const usuario = { isAdmin };
+        const response = await fetch(`/usuarios/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(usuario)
+        });
+        alert(response.ok ? 'Usuário atualizado!' : 'Erro ao atualizar usuário!');
+    }
+    async function carregarJogos() {
+        const response = await fetch('/jogos');
+        const jogos = await response.json();
+        const tabela = document.getElementById('tabela-jogos');
+        tabela.innerHTML = '';
+        jogos.forEach(jogo => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+<td><input type="text" value="${jogo.nome}" class="input-nome"></td>
+<td><input type="text" value="${jogo.descricao}"
+class="input-descricao"></td>
+<td><input type="text" value="${jogo.desenvolvedor}"
+class="input-desenvolvedor"></td>
+<td><input type="text" value="${jogo.genero}" class="input-genero"></td>
+<td><input type="text" value="${jogo.publicador}"
+class="input-publicador"></td>
+<td><input type="text" value="${jogo.requisitosSistema}"
+class="input-requisitos"></td>
+<td><input type="number" value="${jogo.preco}" class="input-preco"
+step="0.01"></td>
+<td><input type="text" value="${jogo.imagemUrl}" class="input-imagem"></td>
+<td><input type="checkbox" ${jogo.emDestaque ? 'checked' : ''}
+class="input-destaque"></td>
+<td><input type="checkbox" ${jogo.noCarrossel ? 'checked' : ''}
+class="input-carrossel"></td>
+<td>
+<button onclick="salvarJogo(this, ${jogo.id})">Salvar</button>
+<button onclick="excluirJogo(${jogo.id})" style="margin-left:5px;
+background:#e74c3c; color:#fff;">Excluir</button>
+</td>
+`;
+            tabela.appendChild(tr);
+        });
+    }
+    async function salvarJogo(button, id) {
+        const tr = button.closest('tr');
+        const jogo = {
+            nome: tr.querySelector('.input-nome').value,
+            descricao: tr.querySelector('.input-descricao').value,
+            desenvolvedor: tr.querySelector('.input-desenvolvedor').value,
+            genero: tr.querySelector('.input-genero').value,
+            publicador: tr.querySelector('.input-publicador').value,
+            requisitosSistema: tr.querySelector('.input-requisitos').value,
+            preco: parseFloat(tr.querySelector('.input-preco').value),
+            imagemUrl: tr.querySelector('.input-imagem').value,
+            emDestaque: tr.querySelector('.input-destaque').checked,
+            noCarrossel: tr.querySelector('.input-carrossel').checked
+        };
+        const response = await fetch(`/jogos/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(jogo)
+        });
+        alert(response.ok ? 'Jogo atualizado!' : 'Erro ao atualizar jogo!');
+    }
+    async function excluirJogo(id) {
+        if (!confirm('Tem certeza que deseja excluir este jogo?')) return;
+        const response = await fetch(`/jogos/${id}`, {
+            method: 'DELETE'
+        });
+        if (response.ok) {
+            alert('Jogo excluído!');
+            carregarJogos();
+        } else {
+            alert('Erro ao excluir o jogo!');
+        }
+    }
+    function abrirFormularioNovoJogo() {
+        document.getElementById('form-novo-jogo').classList.add('active');
+    }
+    function fecharFormularioNovoJogo() {
+        document.getElementById('form-novo-jogo').classList.remove('active');
+    }
+    async function criarJogo() {
+        const nome = document.getElementById('nome').value.trim();
+        const descricao = document.getElementById('descricao').value.trim();
+        const desenvolvedor = document.getElementById('desenvolvedor').value.trim();
+        const genero = document.getElementById('genero').value.trim();
+        const publicador = document.getElementById('publicador').value.trim();
+        const requisitosSistema = document.getElementById('requisitos').value.trim();
+        const precoStr = document.getElementById('preco').value.trim();
+        const imagemUrl = document.getElementById('imagemUrl').value.trim();
+        const emDestaque = document.getElementById('emDestaque').checked;
+        const noCarrossel = document.getElementById('noCarrossel').checked;
+        if (!nome || !descricao || !desenvolvedor || !genero || !publicador ||
+            !requisitosSistema || !precoStr || !imagemUrl) {
+            alert('Preencha todos os campos!');
+            return;
+        }
+        const preco = parseFloat(precoStr);
+        if (isNaN(preco) || preco < 0) {
+            alert('Informe um preço válido!');
+            return;
+        }
+        const jogo = {
+            nome, descricao, desenvolvedor, genero, publicador, requisitosSistema,
+            preco, imagemUrl, emDestaque, noCarrossel
+        };
+        await fetch('/jogos', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(jogo)
+        });
+        document.getElementById('form-novo-jogo').style.display = 'none';
+        carregarJogos();
+    }
+</script>
 </body>
 </html>
