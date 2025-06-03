@@ -9,7 +9,12 @@
 <div class="login-container">
     <h2>Cadastro</h2>
 
-    <form action="/cadastro" method="post">
+    <div id="emailErro" style="color: red; margin-bottom: 10px; display: none;">
+        Já existe um usuário com esse email cadastrado.
+    </div>
+
+
+    <form action="/cadastro" method="post" onsubmit="return validarSenhas()">
         <div class="form-group">
             <label for="nome">Nome completo:</label>
             <input type="text" id="nome" name="nome" required />
@@ -35,6 +40,7 @@
             <input type="password" id="confirmarSenha" name="confirmarSenha" required />
         </div>
 
+        <p id="mensagemErro" style="color: red;"></p>
         <button type="submit">Cadastrar</button>
     </form>
 
@@ -43,5 +49,64 @@
         <a href="/html/recuperar-senha.html">Esqueci a senha</a>
     </div>
 </div>
+<script>
+    function validarSenhas() {
+      const senha = document.getElementById("senha").value;
+      const confirmar = document.getElementById("confirmarSenha").value;
+      const msgErro = document.getElementById("mensagemErro");
+
+
+      if (senha !== confirmar) {
+        msgErro.textContent = "As senhas não coincidem!";
+        return false; // Impede o envio do formulário
+      }
+
+
+      return validarIdade();
+    }
+
+
+    function validarIdade() {
+    const dataNascInput = document.getElementById("dataNascimento");
+    const msgErro = document.getElementById("mensagemErro");
+    const dataNasc = new Date(dataNascInput.value);
+    const hoje = new Date();
+
+
+    // Calcula a idade
+    let idade = hoje.getFullYear() - dataNasc.getFullYear();
+    const mesAtual = hoje.getMonth();
+    const mesNasc = dataNasc.getMonth();
+
+
+    if (mesAtual < mesNasc || (mesAtual === mesNasc && hoje.getDate() < dataNasc.getDate())) {
+      idade--;
+    }
+
+
+    if (idade < 14) {
+      msgErro.textContent = "Você precisa ter pelo menos 14 anos para se cadastrar.";
+      return false;
+    }
+
+
+    msgErro.textContent = "";
+    return true;
+  }
+</script>
+
+
+<script>
+    // Detecta parâmetro "error=true" na URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const erro = urlParams.get("error");
+    if (erro === "true") {
+      const divErro = document.getElementById("emailErro");
+      if (divErro) {
+        divErro.style.display = "block";
+      }
+    }
+</script>
+
 </body>
 </html>
