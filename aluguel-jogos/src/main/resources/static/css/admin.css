@@ -1,63 +1,295 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
+/* admin.css adaptado para visual parecido */
+/* Reset básico */
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: Arial, sans-serif;
+    color: #333;
 }
-
-header {
-    background-color: #333;
+body {
+    background: #fafafa;
+    min-height: 100vh;
+    padding: 20px;
+    padding-top: 75px; /* espaço para navbar fixa */
+    font-family: Arial, sans-serif;
+}
+/* Navbar fixa no topo */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: white;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 40px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+/* Link perfil */
+.perfil-dropdown {
+    position: relative;
+    display: inline-block;
+}
+.perfil-dropdown > a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+}
+.perfil-dropdown > a:hover {
+    background-color: #007bff;
     color: white;
-    padding: 1rem;
-    text-align: center;
 }
-
-main {
-    padding: 2rem;
+/* Dropdown menu perfil */
+.perfil-dropdown .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%; /* logo abaixo */
+    left: 0;
+    margin-top: 8px;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    padding: 12px;
+    min-width: 180px;
+    white-space: nowrap;
+    z-index: 1001;
 }
-
-h2 {
-    margin-top: 2rem;
+.perfil-dropdown.active .dropdown-menu {
+    display: block;
 }
-
+.dropdown-menu p {
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+.dropdown-menu a {
+    display: block;
+    color: #007bff;
+    text-decoration: none;
+    margin-bottom: 8px;
+}
+.dropdown-menu a:hover {
+    text-decoration: underline;
+}
+.dropdown-menu button {
+    width: 100%;
+    padding: 8px;
+    background-color: #ff4d4d;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+.dropdown-menu button:hover {
+    background-color: #cc0000;
+}
+/* Título centralizado na navbar */
+.navbar h2 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: #333;
+}
+/* Seções brancas com sombra leve e cantos arredondados */
+section {
+    background: white;
+    margin-top: 30px;
+    border-radius: 12px;
+    padding: 20px 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+/* Títulos das seções */
+section h2 {
+    margin-bottom: 15px;
+    font-weight: 700;
+    color: #34495e;
+}
+/* Botão novo jogo parecido com botão do navbar */
+.jogos > button {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: background-color 0.3s ease;
+}
+.jogos > button:hover {
+    background-color: #0056b3;
+}
+/* Tabelas */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 1rem;
-    background-color: white;
-    border-radius: 10px;
-    overflow: hidden;
+    font-size: 0.95rem;
+    margin-top: 10px;
 }
-
+thead {
+    background-color: #ecf0f1;
+}
 th, td {
-    padding: 0.75rem;
+    padding: 12px 15px;
     border-bottom: 1px solid #ddd;
     text-align: left;
 }
-
 th {
-    background-color: #f0f0f0;
+    font-weight: 700;
+    color: #2c3e50;
 }
-
-button {
-    padding: 0.5rem 1rem;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
+tbody tr:hover {
+    background-color: #f2f4f7;
+}
+/* Inputs nas tabelas */
+input[type="text"],
+input[type="number"] {
+    padding: 8px 12px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    width: 100%;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease;
+}
+input[type="text"]:focus,
+input[type="number"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+input[type="checkbox"] {
+    transform: scale(1.2);
     cursor: pointer;
 }
-
+/* Botões dentro das tabelas */
+button {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
 button:hover {
-    background-color: #45a049;
+    opacity: 0.85;
 }
-
-.novo-jogo {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    background-color: #2196F3;
+button:focus {
+    outline: none;
 }
-
-.novo-jogo:hover {
-    background-color: #0b7dda;
+/* Botão salvar */
+button[onclick^="salvar"] {
+    background-color: #007bff;
+    color: white;
+}
+/* Botão excluir */
+button[onclick^="excluir"] {
+    background-color: #ff4d4d;
+    color: white;
+}
+/* Modal do formulário novo jogo */
+#form-novo-jogo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1500;
+}
+#form-novo-jogo.active {
+    display: flex;
+}
+#form-novo-jogo .modal-content {
+    background: white;
+    padding: 30px 40px 40px;
+    border-radius: 20px;
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    overflow-y: auto;
+    max-height: 90vh;
+}
+#form-novo-jogo h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.4rem;
+}
+/* Botão fechar modal */
+#form-novo-jogo .btn-fechar {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.2s ease;
+}
+#form-novo-jogo .btn-fechar:hover {
+    color: #333;
+}
+/* Inputs e labels do modal */
+#form-novo-jogo > input,
+#form-novo-jogo > label,
+#form-novo-jogo > button {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    margin: 8px auto;
+}
+#form-novo-jogo input[type="text"],
+#form-novo-jogo input[type="number"] {
+    padding: 10px 14px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+#form-novo-jogo input[type="text"]:focus,
+#form-novo-jogo input[type="number"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+#form-novo-jogo label {
+    font-weight: normal;
+    font-size: 1rem;
+    color: #333;
+    cursor: pointer;
+}
+#form-novo-jogo label input[type="checkbox"] {
+    width: auto;
+    margin-right: 8px;
+    vertical-align: middle;
+    transform: scale(1);
+}
+/* Botão salvar modal */
+#form-novo-jogo button.salvar-jogo {
+    background-color: #007bff;
+    color: white;
+    border-radius: 20px;
+    padding: 14px;
+    font-weight: bold;
+    border: none;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+#form-novo-jogo button.salvar-jogo:hover {
+    background-color: #0056b3;
 }
