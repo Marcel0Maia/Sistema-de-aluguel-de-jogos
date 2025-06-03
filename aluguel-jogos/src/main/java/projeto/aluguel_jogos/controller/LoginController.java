@@ -46,7 +46,7 @@ public class LoginController {
             return "redirect:/html/login.html";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-            return "redirect:/cadastro?error=true";
+            return "redirect:/html/cadastro.html?error=true";
         }
     }
 
@@ -72,7 +72,7 @@ public class LoginController {
             return "redirect:/html/home.html"; // Vai para a home se não for admin
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-            return "redirect:/login?error=true";
+            return "redirect:/html/login.html?error=true";
         }
     }
 
