@@ -9,6 +9,10 @@
 <div class="login-container">
     <h2>Login</h2>
 
+    <div id="mensagemErro" style="color: red; margin-bottom: 10px; display: none;">
+        E-mail ou senha inválidos.
+    </div>
+
     <form action="/login" method="post">
         <div class="form-group">
             <label for="email">E-mail:</label>
@@ -28,5 +32,17 @@
         <a href="/html/recuperar-senha.html">Esqueci a senha</a>
     </div>
 </div>
+<script>
+    // Detecta parâmetro "error=true" na URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const erro = urlParams.get("error");
+    if (erro === "true") {
+      const divErro = document.getElementById("mensagemErro");
+      if (divErro) {
+        divErro.style.display = "block";
+      }
+    }
+</script>
+
 </body>
 </html>
