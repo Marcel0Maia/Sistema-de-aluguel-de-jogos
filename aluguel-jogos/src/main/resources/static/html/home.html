@@ -124,6 +124,9 @@
 
                 item.appendChild(img);
                 item.appendChild(nome);
+                item.addEventListener('click', () => {
+                  window.location.href = `/html/jogo.html?id=${jogo.id}`;
+                });
                 carrossel.appendChild(item);
               });
             });
@@ -145,6 +148,9 @@
 
                 card.appendChild(img);
                 card.appendChild(nome);
+                card.addEventListener('click', () => {
+                  window.location.href = `/html/jogo.html?id=${jogo.id}`;
+                });
                 container.appendChild(card);
               });
             });

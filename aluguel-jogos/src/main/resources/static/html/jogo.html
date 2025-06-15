@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <title>Detalhes do Jogo</title>
+    <link rel="stylesheet" href="/css/jogo.css" />
+</head>
+<body>
+
+<div class="navbar">
+    <div class="nav-links">
+        <a href="/html/home.html" title="Início">⌂</a>
+        <div class="perfil-dropdown">
+            <a href="#" id="perfil-link">Perfil</a>
+            <div class="dropdown-menu">
+                <p id="usuario-nome"></p>
+                <a href="#">Ver perfil</a>
+                <button id="btnLogout">Logout</button>
+            </div>
+        </div>
+        <a href="#">Biblioteca</a>
+        <a href="#">Categoria</a>
+    </div>
+    <div class="search-bar">
+        <input type="text" placeholder="Buscar" />
+    </div>
+</div>
+
+<div class="jogo-container">
+    <h1 id="jogo-nome">Carregando...</h1>
+    <img id="jogo-imagem" src="" alt="Imagem do jogo" class="jogo-imagem" />
+
+    <div class="jogo-conteudo">
+        <div class="jogo-info-esquerda">
+            <p><strong>Descrição:</strong> <span id="jogo-descricao"></span></p>
+            <p><strong>Gênero:</strong> <span id="jogo-genero"></span></p>
+            <p><strong>Desenvolvedor:</strong> <span id="jogo-desenvolvedor"></span></p>
+            <p><strong>Publicador:</strong> <span id="jogo-publicador"></span></p>
+            <p><strong>Requisitos do Sistema:</strong> <span id="jogo-requisitos"></span></p>
+        </div>
+
+        <div class="jogo-info-direita">
+            <div class="preco">
+                <p><strong>Preço por dia:</strong> R$ <span id="preco-dia"></span></p>
+                <p><strong>Preço por semana:</strong> R$ <span id="preco-semana"></span></p>
+                <p><strong>Preço por mês:</strong> R$ <span id="preco-mes"></span></p>
+            </div>
+            <button id="btnAlugar">Alugar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de aluguel -->
+<div class="modal-aluguel" id="modalAluguel" role="dialog" aria-modal="true" aria-labelledby="modal-jogo-nome" tabindex="-1">
+    <div class="modal-content">
+        <h2 id="modal-jogo-nome">Alugar Jogo</h2>
+        <img id="modal-jogo-imagem" class="modal-jogo-img" src="" alt="Imagem do jogo" />
+
+        <div class="aluguel-opcoes">
+            <label>
+                <input type="radio" name="tempo-aluguel" value="1" checked />
+                24 horas - R$ <span id="modal-preco-dia">0,00</span>
+            </label>
+            <label>
+                <input type="radio" name="tempo-aluguel" value="7" />
+                7 dias - R$ <span id="modal-preco-semana">0,00</span>
+            </label>
+            <label>
+                <input type="radio" name="tempo-aluguel" value="30" />
+                1 mês - R$ <span id="modal-preco-mes">0,00</span>
+            </label>
+        </div>
+
+        <div class="total-aluguel">
+            Valor total: R$ <span id="valor-total">0,00</span>
+        </div>
+
+        <div class="modal-buttons">
+            <button class="btn-confirmar" id="btnConfirmarAluguel">Confirmar</button>
+            <button class="btn-cancelar" id="btnCancelarAluguel">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function obterParametroUrl(nome) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(nome);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        // Verifica se usuário está logado
+        fetch('/usuarios/usuario-logado', { credentials: 'include' })
+            .then(response => {
+                if (!response.ok) throw new Error('Não autenticado');
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('usuario-nome').textContent = `Olá, ${data.nome}`;
+            })
+            .catch(() => {
+                window.location.href = '/html/login.html';
+            });
+
+        document.getElementById("btnLogout").addEventListener("click", () => {
+            fetch("/logout", {
+                method: "POST",
+                credentials: "include"
+            }).then(() => {
+                window.location.href = "/html/login.html";
+            });
+        });
+
+        const jogoId = obterParametroUrl("id");
+
+        if (!jogoId) {
+            alert("Jogo não encontrado.");
+            return;
+        }
+
+        fetch(`/jogos/${jogoId}`)
+            .then(response => {
+                if (!response.ok) throw new Error("Erro ao carregar o jogo");
+                return response.json();
+            })
+            .then(jogo => {
+                document.title = jogo.nome;
+                document.getElementById("jogo-nome").textContent = jogo.nome;
+                document.getElementById("jogo-imagem").src = jogo.imagemUrl || 'https://via.placeholder.com/300x200?text=Sem+imagem';
+                document.getElementById("jogo-descricao").textContent = jogo.descricao || 'Não disponível';
+                document.getElementById("jogo-genero").textContent = jogo.genero || 'Desconhecido';
+                document.getElementById("jogo-desenvolvedor").textContent = jogo.desenvolvedor || 'Desconhecido';
+                document.getElementById("jogo-publicador").textContent = jogo.publicador || 'Desconhecido';
+                document.getElementById("jogo-requisitos").textContent = jogo.requisitosSistema || 'Não especificados';
+
+                const precoMes = jogo.preco || 0;
+                const precoDia = precoMes / 30;
+                const precoSemana = precoDia * 7;
+
+                document.getElementById("preco-dia").textContent = precoDia.toFixed(2);
+                document.getElementById("preco-semana").textContent = precoSemana.toFixed(2);
+                document.getElementById("preco-mes").textContent = precoMes.toFixed(2);
+
+                // Atualiza preços no modal
+                document.getElementById("modal-preco-dia").textContent = precoDia.toFixed(2);
+                document.getElementById("modal-preco-semana").textContent = precoSemana.toFixed(2);
+                document.getElementById("modal-preco-mes").textContent = precoMes.toFixed(2);
+
+                // Botão alugar abre o modal
+                const btnAlugar = document.getElementById("btnAlugar");
+                const modal = document.getElementById("modalAluguel");
+                btnAlugar.addEventListener("click", () => {
+                    document.getElementById("modal-jogo-nome").textContent = jogo.nome;
+                    document.getElementById("modal-jogo-imagem").src = jogo.imagemUrl || 'https://via.placeholder.com/200x130?text=Sem+imagem';
+
+                    // Seleciona a primeira opção por padrão
+                    document.querySelector('input[name="tempo-aluguel"][value="1"]').checked = true;
+                    atualizarValorTotal();
+
+                    // Exibe modal
+                    modal.classList.add("active");
+                    modal.focus();
+                });
+
+                // Fecha modal ao clicar em cancelar
+                document.getElementById("btnCancelarAluguel").addEventListener("click", () => {
+                    modal.classList.remove("active");
+                });
+
+                // Atualiza valor total ao trocar opção
+                document.querySelectorAll('input[name="tempo-aluguel"]').forEach(radio => {
+                    radio.addEventListener('change', atualizarValorTotal);
+                });
+
+                // Confirmar aluguel (simulação)
+                document.getElementById("btnConfirmarAluguel").addEventListener("click", () => {
+                    const selecionado = document.querySelector('input[name="tempo-aluguel"]:checked').value;
+                    alert(`Aluguel confirmado para ${selecionado == '1' ? '24 horas' : selecionado == '7' ? '7 dias' : '1 mês'}! Valor: R$ ${document.getElementById('valor-total').textContent}`);
+                    modal.classList.remove("active");
+                });
+
+                function atualizarValorTotal() {
+                    const selecionado = document.querySelector('input[name="tempo-aluguel"]:checked').value;
+                    let total = 0;
+                    if (selecionado === '1') total = precoDia;
+                    else if (selecionado === '7') total = precoSemana;
+                    else if (selecionado === '30') total = precoMes;
+
+                    document.getElementById('valor-total').textContent = total.toFixed(2);
+                }
+            })
+            .catch(() => {
+                alert("Erro ao carregar os dados do jogo.");
+            });
+
+        // Dropdown perfil
+        const perfilDropdown = document.querySelector('.perfil-dropdown');
+        const perfilLink = document.getElementById('perfil-link');
+
+        perfilLink.addEventListener('click', e => {
+            e.preventDefault();
+            perfilDropdown.classList.toggle('active');
+        });
+
+        document.addEventListener('click', e => {
+            if (!perfilDropdown.contains(e.target)) {
+                perfilDropdown.classList.remove('active');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
