@@ -23,7 +23,9 @@
   </div>
 
   <div class="search-bar">
-    <input type="text" placeholder="Buscar">
+    <label>
+      <input type="text" placeholder="Buscar">
+    </label>
   </div>
 
 </div>
@@ -124,6 +126,9 @@
 
                 item.appendChild(img);
                 item.appendChild(nome);
+                item.addEventListener('click', () => {
+                  window.location.href = `/html/jogo.html?id=${jogo.id}`;
+                });
                 carrossel.appendChild(item);
               });
             });
@@ -145,6 +150,9 @@
 
                 card.appendChild(img);
                 card.appendChild(nome);
+                card.addEventListener('click', () => {
+                  window.location.href = `/html/jogo.html?id=${jogo.id}`;
+                });
                 container.appendChild(card);
               });
             });
