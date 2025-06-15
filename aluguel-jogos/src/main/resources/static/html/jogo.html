@@ -22,7 +22,9 @@
         <a href="#">Categoria</a>
     </div>
     <div class="search-bar">
-        <input type="text" placeholder="Buscar" />
+        <label>
+            <input type="text" placeholder="Buscar" />
+        </label>
     </div>
 </div>
 
@@ -175,7 +177,7 @@
                 // Confirmar aluguel (simulação)
                 document.getElementById("btnConfirmarAluguel").addEventListener("click", () => {
                     const selecionado = document.querySelector('input[name="tempo-aluguel"]:checked').value;
-                    alert(`Aluguel confirmado para ${selecionado == '1' ? '24 horas' : selecionado == '7' ? '7 dias' : '1 mês'}! Valor: R$ ${document.getElementById('valor-total').textContent}`);
+                    alert(`Aluguel confirmado para ${selecionado === '1' ? '24 horas' : selecionado === '7' ? '7 dias' : '1 mês'}! Valor: R$ ${document.getElementById('valor-total').textContent}`);
                     modal.classList.remove("active");
                 });
 
