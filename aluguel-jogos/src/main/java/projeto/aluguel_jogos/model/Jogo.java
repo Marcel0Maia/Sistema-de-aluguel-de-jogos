@@ -24,8 +24,8 @@ public class Jogo {
     private boolean emDestaque = false;
     private boolean noCarrossel = false;
 
-    @OneToMany(mappedBy = "jogo", cascade = CascadeType.ALL)
-    private List<UsuarioJogo> alugueis = new ArrayList<>();
+    @ManyToMany(mappedBy = "jogos")
+    private List<Usuario> usuarios = new ArrayList<>();
 
     // Construtor vazio obrigatório
     public Jogo() {
@@ -124,12 +124,8 @@ public class Jogo {
 
     public void setNoCarrossel(boolean noCarrossel) { this.noCarrossel = noCarrossel; }
 
+    public List<Usuario> getUsuarios() { return usuarios; }
 
-    public List<UsuarioJogo> getAlugueis() {
-        return alugueis;
-    }
+    public void setUsuarios(List<Usuario> usuarios) { this.usuarios = usuarios; }
 
-    public void setAlugueis(List<UsuarioJogo> alugueis) {
-        this.alugueis = alugueis;
-    }
 }
