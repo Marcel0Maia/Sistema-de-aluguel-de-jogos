@@ -19,9 +19,13 @@ public class Usuario {
     private LocalDate dataNascimento;
     @Column(name = "is_admin")
     private boolean isAdmin = false;
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<UsuarioJogo> alugueis = new ArrayList<>();
-
+    @ManyToMany
+    @JoinTable(
+            name = "usuarios_jogos",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "jogo_id")
+    )
+    private List<Jogo> jogos = new ArrayList<>();
     public Usuario() {}
     public Usuario(String nome, String email, String senha, LocalDate dataNascimento) {
         this.nome = nome;
@@ -66,13 +70,11 @@ public class Usuario {
     public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
-
-
-    public List<UsuarioJogo> getAlugueis() {
-        return alugueis;
+    @JsonIgnore
+    public List<Jogo> getJogos() {
+        return jogos;
     }
-
-    public void setAlugueis(List<UsuarioJogo> alugueis) {
-        this.alugueis = alugueis;
+    public void setJogos(List<Jogo> jogos) {
+        this.jogos = jogos;
     }
 }
