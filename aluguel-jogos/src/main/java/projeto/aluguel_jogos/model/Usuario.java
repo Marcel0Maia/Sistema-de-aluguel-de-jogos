@@ -19,6 +19,8 @@ public class Usuario {
     private LocalDate dataNascimento;
     @Column(name = "is_admin")
     private boolean isAdmin = false;
+    @Column(name = "foto")
+    private String foto;
     @ManyToMany
     @JoinTable(
             name = "usuarios_jogos",
@@ -76,5 +78,13 @@ public class Usuario {
     }
     public void setJogos(List<Jogo> jogos) {
         this.jogos = jogos;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }
