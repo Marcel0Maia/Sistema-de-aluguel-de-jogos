@@ -20,7 +20,7 @@ public class UserService {
      */
     public Usuario cadastrarUsuario(String nome, String email, String senha, LocalDate
             dataNascimento) throws Exception {
-// Verifica se o email já existe no banco
+        // Verifica se o email já existe no banco
         Optional<Usuario> existente = usuarioRepository.findByEmail(email);
         if (existente.isPresent()) {
             throw new Exception("Usuário já cadastrado");
@@ -28,6 +28,33 @@ public class UserService {
         Usuario novoUsuario = new Usuario(nome, email, senha, dataNascimento);
         usuarioRepository.save(novoUsuario);
         return novoUsuario;
+    }
+
+    public Usuario atualizarUsuario(Long id, String nome, String email, String senha, LocalDate
+            dataNascimento) throws Exception {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new Exception("Usuário não encontrado"));
+
+        // Atualiza os campos apenas se não forem nulos
+        if (nome != null) {
+            usuario.setNome(nome);
+        }
+        if (email != null) {
+            Optional<Usuario> existente = usuarioRepository.findByEmail(email);
+            if (existente.isPresent() && !existente.get().getId().equals(id)) {
+                throw new Exception("Email já cadastrado");
+            }
+            usuario.setEmail(email);
+        }
+        if (senha != null) {
+            usuario.setSenha(senha);
+        }
+        if (dataNascimento != null) {
+            usuario.setDataNascimento(dataNascimento);
+        }
+
+        usuarioRepository.save(usuario);
+        return usuario;
     }
     /**
      * Valida as credenciais de login.
