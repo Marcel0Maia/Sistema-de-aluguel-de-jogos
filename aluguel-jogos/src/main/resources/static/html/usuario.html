@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil do Usuário</title>
+    <link rel="stylesheet" href="/css/home.css">
+    <style>
+        .custom-file-btn {
+            background-color: #444;
+              color: white;
+              padding: 6px 12px;
+              border-radius: 4px;
+              cursor: pointer;
+              font-size: 0.9em;
+              margin-top: 8px;
+              border: none;
+        }
+
+        .galeria {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          margin-top: 10px;
+          max-width: 300px;
+        }
+
+        .galeria img {
+          width: 60px;
+          height: 60px;
+          border-radius: 10px;
+          border: 2px solid transparent;
+          cursor: pointer;
+          transition: 0.2s;
+        }
+
+        .galeria img.selecionado {
+          border-color: blue;
+          box-shadow: 0 0 6px blue;
+        }
+        .perfil-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 60px;
+        }
+
+        .foto-nome {
+          display: flex;
+          gap: 20px;
+          align-items: center;
+          margin: 20px;
+        }
+
+        .foto-perfil {
+          width: 120px;
+          height: 120px;
+          border: 1px solid #999;
+          background-color: #ddd;
+          object-fit: cover;
+        }
+
+        .custom-file-btn {
+            background-color: #444;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        .dados-usuario p {
+          margin: 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #27ae60;
+        }
+
+        .filtrar-btn {
+            width: 15%;
+        }
+        .historico-container {
+          border: 1px solid #999;
+          width: 80%;
+          max-width: 600px;
+          padding: 10px;
+          background-color: #eee;
+        }
+
+        .historico-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: #ccc;
+          padding: 5px;
+          margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="nav-links">
+        <a href="/html/home.html" title="Início">⌂</a>
+        <div class="perfil-dropdown">
+            <a href="#">Perfil</a>
+            <div class="dropdown-menu">
+                <p id="usuario-nome-menu"></p>
+                <a href="#">Ver perfil</a>
+                <button id="btnLogout">Logout</button>
+            </div>
+        </div>
+        <a href="#">Biblioteca</a>
+        <a href="#">Categoria</a>
+    </div>
+    <div class="search-bar">
+        <label><input type="text" placeholder="Buscar"></label>
+    </div>
+</div>
+
+<div class="perfil-container">
+    <div class="foto-nome">
+        <div>
+            <div>
+                <img id="fotoPreview" class="foto-perfil" src="/imagens/perfil-de-usuario.webp" alt="Foto de perfil" />
+
+            </div>
+
+        </div>
+        <div class="dados-usuario">
+            <p id="usuario-nome" style="font-size: 1.2em; font-weight: bold;">Nome</p>
+            <p id="usuario-email">email@email.com</p>
+            <button class="btn-editar" onclick="window.location.href='/html/configuracoes.html'">Editar perfil</button>
+            <button type="button" id="btnSelecionarIcone" class="custom-file-btn">Trocar ícone</button>
+        </div>
+    </div>
+
+    <div id="galeria-icones" class="galeria" style="display: none;">
+        <!-- Substitua os nomes das imagens se forem diferentes -->
+        <img src="/imagens/avatar1.png" data-nome="avatar1.png" />
+        <img src="/imagens/avatar2.png" data-nome="avatar2.png" />
+        <img src="/imagens/avatar3.png" data-nome="avatar3.png" />
+        <img src="/imagens/avatar4.png" data-nome="avatar4.png" />
+        <img src="/imagens/avatar5.png" data-nome="avatar5.png" />
+        <img src="/imagens/avatar6.png" data-nome="avatar6.png" />
+        <img src="/imagens/avatar7.png" data-nome="avatar7.png" />
+        <img src="/imagens/avatar8.png" data-nome="avatar8.png" />
+        <img src="/imagens/avatar9.png" data-nome="avatar9.png" />
+        <img src="/imagens/avatar10.png" data-nome="avatar10.png" />
+    </div>
+
+    <div id="icone-msg" style="margin-top: 6px; color: green;"></div>
+
+    <div class="historico-container">
+        <div class="historico-header">
+            <span>Histórico</span>
+            <button class="filtrar-btn">Filtrar</button>
+        </div>
+        <div id="historico-jogos" style="min-height: 200px; background-color: #ccc;"></div>
+    </div>
+</div>
+
+<script>
+    // Buscar dados do usuário
+    document.addEventListener("DOMContentLoaded", function () {
+      fetch('/usuarios/usuario-logado', { credentials: 'include' })
+        .then(response => {
+          if (!response.ok) throw new Error('Não autenticado');
+          return response.json();
+        })
+        .then(data => {
+          document.getElementById('usuario-nome').textContent = data.nome;
+          document.getElementById('usuario-nome-menu').textContent = `Olá, ${data.nome}`;
+          document.getElementById('usuario-email').textContent = data.email;
+
+        // Atualiza a imagem de perfil caso o campo "foto" exista
+        if (data.foto) {
+            document.getElementById("fotoPreview").src = `/imagens/${data.foto}`;
+            }
+        })
+        .catch(() => {
+          window.location.href = '/html/login.html';
+        });
+    });
+
+    // Logout
+    document.getElementById("btnLogout").addEventListener("click", () => {
+      fetch("/logout", {
+        method: "POST",
+        credentials: "include"
+      })
+      .then(() => window.location.href = "/html/login.html")
+      .catch(console.error);
+    });
+
+    // Foto de perfil - preview da imagem carregada
+    document.getElementById("inputFoto").addEventListener("change", function (event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          document.getElementById("fotoPreview").src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+</script>
+<script>
+    const perfilDropdown = document.querySelector('.perfil-dropdown');
+    const perfilLink = perfilDropdown.querySelector('a');
+
+    perfilLink.addEventListener('click', function(event) {
+      event.preventDefault();
+      perfilDropdown.classList.toggle('active');
+    });
+
+    document.addEventListener('click', function(event) {
+      if (!perfilDropdown.contains(event.target)) {
+        perfilDropdown.classList.remove('active');
+      }
+    });
+</script>
+<script>
+    let imagemSelecionada = null;
+
+document.getElementById("btnSelecionarIcone").addEventListener("click", () => {
+  const galeria = document.getElementById("galeria-icones");
+  galeria.style.display = galeria.style.display === "none" ? "flex" : "none";
+});
+
+document.querySelectorAll('#galeria-icones img').forEach(img => {
+  img.addEventListener('click', () => {
+    document.querySelectorAll('#galeria-icones img').forEach(i => i.classList.remove('selecionado'));
+    img.classList.add('selecionado');
+    imagemSelecionada = img.dataset.nome;
+
+    // Atualiza imagem de perfil visualmente
+    document.getElementById("fotoPreview").src = `/imagens/${imagemSelecionada}`;
+
+    // Atualiza no banco
+    fetch('/usuarios/atualizar-icone', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ foto: imagemSelecionada })
+    })
+    .then(res => {
+      if (!res.ok) throw new Error();
+      document.getElementById("icone-msg").textContent = "Ícone atualizado com sucesso!";
+    })
+    .catch(() => {
+      document.getElementById("icone-msg").textContent = "Erro ao atualizar ícone.";
+    });
+  });
+});
+</script>
+</body>
+</html>
