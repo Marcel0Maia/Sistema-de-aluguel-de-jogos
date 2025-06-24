@@ -3,6 +3,7 @@ package projeto.aluguel_jogos.controller;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -74,5 +75,19 @@ public class UsuarioController {
     @DeleteMapping("/{id}")
     public void deletarUsuario(@PathVariable Long id) {
         usuarioRepository.deleteById(id);
+    }
+
+    @PutMapping("/atualizar-icone")
+    public ResponseEntity<?> atualizarIcone(@RequestBody Map<String, String> payload, HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        if (usuario == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String novaFoto = payload.get("foto");
+        usuario.setFoto(novaFoto);
+        usuarioRepository.save(usuario);
+
+        return ResponseEntity.ok().build();
     }
 }

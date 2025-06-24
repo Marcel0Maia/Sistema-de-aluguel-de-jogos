@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Editar Perfil</title>
+  <link rel="stylesheet" href="/css/home.css">
+  <link rel="stylesheet" href="/css/cadastro.css">
+  <style>
+    #cancelarAlterações {
+      background-color: #f44336; /* Vermelho */
+      color: white;
+      border: none;
+      margin: 15px 0px;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    .modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+  </style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="nav-links">
+    <a href="/html/home.html" title="Início">⌂</a>
+    <div class="perfil-dropdown">
+      <a href="#">Perfil</a>
+      <div class="dropdown-menu">
+        <p id="usuario-nome"></p>
+        <a href="usuario.html">Ver perfil</a>
+        <button id="btnLogout">Logout</button>
+      </div>
+    </div>
+
+    <a href="#">Biblioteca</a>
+    <a href="#">Categoria</a>
+  </div>
+
+  <div class="search-bar">
+    <label>
+      <input type="text" placeholder="Buscar">
+    </label>
+  </div>
+</div>
+
+<div class="login-container">
+  <h2>Editar Perfil</h2>
+
+  <div id="emailErro" style="color: red; margin-bottom: 10px; display: none;">
+    Já existe um usuário com esse email cadastrado.
+  </div>
+
+
+  <form action="/configuracoes" method="post" onsubmit="return validarSenhas()">
+    <input type="hidden" id="id" name="id" required>
+    <div class="form-group">
+      <label for="nome">Nome completo:</label>
+      <input type="text" id="nome" name="nome" required />
+    </div>
+
+    <div class="form-group">
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" name="email" required />
+    </div>
+
+    <div class="form-group">
+      <label for="dataNascimento">Data de nascimento:</label>
+      <input type="date" id="dataNascimento" name="dataNascimento" required />
+    </div>
+
+    <div class="form-group">
+      <label for="senha">Senha:</label>
+      <input type="password" id="senha" name="senha" required />
+    </div>
+
+    <div class="form-group">
+      <label for="confirmarSenha">Confirmar senha:</label>
+      <input type="password" id="confirmarSenha" name="confirmarSenha" required />
+    </div>
+
+    <p id="mensagemErro" style="color: red;"></p>
+    <div class="modal-buttons">
+      <button type="submit">Salvar</button>
+    </div>
+  </form>
+  <button id="cancelarAlterações">Cancelar</button>
+
+</div>
+
+<script>
+  // Carrega dados do usuário logado
+  let usuarioId = null;
+
+  fetch('/usuarios/usuario-logado', { credentials: 'include' })
+    .then(res => {
+      if (!res.ok) throw new Error();
+      return res.json();
+    })
+    .then(usuario => {
+      usuarioId = usuario.id;
+      document.getElementById("usuario-nome").textContent = `Olá, ${usuario.nome}`;
+      document.getElementById("id").value = usuarioId;
+      document.getElementById("nome").value = usuario.nome;
+      document.getElementById("dataNascimento").value = usuario.dataNascimento;
+      document.getElementById("email").value = usuario.email;
+    })
+    .catch(() => {
+      window.location.href = '/html/login.html';
+    });
+
+  document.getElementById("btnLogout").addEventListener("click", () => {
+      fetch("/logout", {
+        method: "POST",
+        credentials: "include"
+      })
+              .then(() => {
+                window.location.href = "/html/login.html"; // redireciona para login
+              })
+              .catch(console.error);
+    });
+  document.getElementById("cancelarAlterações").addEventListener("click", () => {
+      fetch("/usuario", {
+        method: "PUT",
+        credentials: "include"
+      })
+              .then(() => {
+                window.location.href = "/html/usuario.html"; // redireciona para perfil do usuário
+              })
+              .catch(console.error);
+    });
+</script>
+
+<script>
+  const perfilDropdown = document.querySelector('.perfil-dropdown');
+  const perfilLink = perfilDropdown.querySelector('a');
+
+  perfilLink.addEventListener('click', function(event) {
+    event.preventDefault();
+    perfilDropdown.classList.toggle('active');
+  });
+
+  document.addEventListener('click', function(event) {
+    if (!perfilDropdown.contains(event.target)) {
+      perfilDropdown.classList.remove('active');
+    }
+  });
+</script>
+<script>
+  function validarSenhas() {
+    const senha = document.getElementById("senha").value;
+    const confirmar = document.getElementById("confirmarSenha").value;
+    const msgErro = document.getElementById("mensagemErro");
+
+
+    if (senha !== confirmar) {
+      msgErro.textContent = "As senhas não coincidem!";
+      return false; // Impede o envio do formulário
+    }
+
+
+    return validarIdade();
+  }
+
+
+  function validarIdade() {
+  const dataNascInput = document.getElementById("dataNascimento");
+  const msgErro = document.getElementById("mensagemErro");
+  const dataNasc = new Date(dataNascInput.value);
+  const hoje = new Date();
+
+
+  // Calcula a idade
+  let idade = hoje.getFullYear() - dataNasc.getFullYear();
+  const mesAtual = hoje.getMonth();
+  const mesNasc = dataNasc.getMonth();
+
+
+  if (mesAtual < mesNasc || (mesAtual === mesNasc && hoje.getDate() < dataNasc.getDate())) {
+    idade--;
+  }
+
+
+  if (idade < 14) {
+    msgErro.textContent = "Você precisa ter pelo menos 14 anos para se cadastrar.";
+    return false;
+  }
+
+
+  msgErro.textContent = "";
+  return true;
+}
+</script>
+
+
+<script>
+  // Detecta parâmetro "error=true" na URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const erro = urlParams.get("error");
+  if (erro === "true") {
+    const divErro = document.getElementById("emailErro");
+    if (divErro) {
+      divErro.style.display = "block";
+    }
+  }
+</script>
+</body>
