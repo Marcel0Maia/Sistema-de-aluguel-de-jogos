@@ -16,6 +16,7 @@
               border: none;
         }
 
+
         .galeria {
           display: flex;
           flex-wrap: wrap;
@@ -23,6 +24,7 @@
           margin-top: 10px;
           max-width: 300px;
         }
+
 
         .galeria img {
           width: 60px;
@@ -32,6 +34,7 @@
           cursor: pointer;
           transition: 0.2s;
         }
+
 
         .galeria img.selecionado {
           border-color: blue;
@@ -44,12 +47,14 @@
           margin-top: 60px;
         }
 
+
         .foto-nome {
           display: flex;
           gap: 20px;
           align-items: center;
           margin: 20px;
         }
+
 
         .foto-perfil {
           width: 120px;
@@ -58,6 +63,7 @@
           background-color: #ddd;
           object-fit: cover;
         }
+
 
         .custom-file-btn {
             background-color: #444;
@@ -70,9 +76,11 @@
             margin-top: 8px;
         }
 
+
         .dados-usuario p {
           margin: 0;
         }
+
 
         button {
             width: 100%;
@@ -85,9 +93,11 @@
             font-size: 16px;
         }
 
+
         button:hover {
             background-color: #27ae60;
         }
+
 
         .filtrar-btn {
             width: 15%;
@@ -99,6 +109,7 @@
           padding: 10px;
           background-color: #eee;
         }
+
 
         .historico-header {
           display: flex;
@@ -112,6 +123,7 @@
 </head>
 <body>
 
+
 <div class="navbar">
     <div class="nav-links">
         <a href="/html/home.html" title="Início">⌂</a>
@@ -119,11 +131,11 @@
             <a href="#">Perfil</a>
             <div class="dropdown-menu">
                 <p id="usuario-nome-menu"></p>
-                <a href="#">Ver perfil</a>
+                <a href="usuario.html">Ver perfil</a>
                 <button id="btnLogout">Logout</button>
             </div>
         </div>
-        <a href="#">Biblioteca</a>
+        <a href="biblioteca.html">Biblioteca</a>
         <a href="#">Categoria</a>
     </div>
     <div class="search-bar">
@@ -131,13 +143,16 @@
     </div>
 </div>
 
+
 <div class="perfil-container">
     <div class="foto-nome">
         <div>
             <div>
                 <img id="fotoPreview" class="foto-perfil" src="/imagens/perfil-de-usuario.webp" alt="Foto de perfil" />
 
+
             </div>
+
 
         </div>
         <div class="dados-usuario">
@@ -147,6 +162,7 @@
             <button type="button" id="btnSelecionarIcone" class="custom-file-btn">Trocar ícone</button>
         </div>
     </div>
+
 
     <div id="galeria-icones" class="galeria" style="display: none;">
         <!-- Substitua os nomes das imagens se forem diferentes -->
@@ -162,7 +178,9 @@
         <img src="/imagens/avatar10.png" data-nome="avatar10.png" />
     </div>
 
+
     <div id="icone-msg" style="margin-top: 6px; color: green;"></div>
+
 
     <div class="historico-container">
         <div class="historico-header">
@@ -172,6 +190,7 @@
         <div id="historico-jogos" style="min-height: 200px; background-color: #ccc;"></div>
     </div>
 </div>
+
 
 <script>
     // Buscar dados do usuário
@@ -186,6 +205,7 @@
           document.getElementById('usuario-nome-menu').textContent = `Olá, ${data.nome}`;
           document.getElementById('usuario-email').textContent = data.email;
 
+
         // Atualiza a imagem de perfil caso o campo "foto" exista
         if (data.foto) {
             document.getElementById("fotoPreview").src = `/imagens/${data.foto}`;
@@ -196,6 +216,7 @@
         });
     });
 
+
     // Logout
     document.getElementById("btnLogout").addEventListener("click", () => {
       fetch("/logout", {
@@ -205,6 +226,7 @@
       .then(() => window.location.href = "/html/login.html")
       .catch(console.error);
     });
+
 
     // Foto de perfil - preview da imagem carregada
     document.getElementById("inputFoto").addEventListener("change", function (event) {
@@ -222,10 +244,12 @@
     const perfilDropdown = document.querySelector('.perfil-dropdown');
     const perfilLink = perfilDropdown.querySelector('a');
 
+
     perfilLink.addEventListener('click', function(event) {
       event.preventDefault();
       perfilDropdown.classList.toggle('active');
     });
+
 
     document.addEventListener('click', function(event) {
       if (!perfilDropdown.contains(event.target)) {
@@ -236,19 +260,23 @@
 <script>
     let imagemSelecionada = null;
 
-document.getElementById("btnSelecionarIcone").addEventListener("click", () => {
+
+ document.getElementById("btnSelecionarIcone").addEventListener("click", () => {
   const galeria = document.getElementById("galeria-icones");
   galeria.style.display = galeria.style.display === "none" ? "flex" : "none";
-});
+ });
 
-document.querySelectorAll('#galeria-icones img').forEach(img => {
+
+ document.querySelectorAll('#galeria-icones img').forEach(img => {
   img.addEventListener('click', () => {
     document.querySelectorAll('#galeria-icones img').forEach(i => i.classList.remove('selecionado'));
     img.classList.add('selecionado');
     imagemSelecionada = img.dataset.nome;
 
+
     // Atualiza imagem de perfil visualmente
     document.getElementById("fotoPreview").src = `/imagens/${imagemSelecionada}`;
+
 
     // Atualiza no banco
     fetch('/usuarios/atualizar-icone', {
@@ -265,7 +293,7 @@ document.querySelectorAll('#galeria-icones img').forEach(img => {
       document.getElementById("icone-msg").textContent = "Erro ao atualizar ícone.";
     });
   });
-});
+ });
 </script>
 </body>
 </html>

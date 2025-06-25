@@ -7,6 +7,7 @@
 </head>
 <body>
 
+
 <div class="navbar">
   <div class="nav-links">
     <a href="/html/home.html" title="Início">⌂</a>
@@ -19,9 +20,11 @@
       </div>
     </div>
 
-    <a href="#">Biblioteca</a>
+
+    <a href="biblioteca.html">Biblioteca</a>
     <a href="#">Categoria</a>
   </div>
+
 
   <div class="search-bar">
     <label>
@@ -29,7 +32,9 @@
     </label>
   </div>
 
+
 </div>
+
 
 <div class="carrossel-container">
   <button class="carrossel-btn" onclick="moverCarrossel(-1)">◀</button>
@@ -37,18 +42,23 @@
   <button class="carrossel-btn" onclick="moverCarrossel(1)">▶</button>
 </div>
 
+
 <h1>Jogos em Destaque</h1>
 <div id="jogos-container" class="container"></div>
+
 
 <script>
   let posicaoCarrossel = 0;
   const larguraItem = 420; // largura do item + margem direita (400 + 20)
 
+
   function moverCarrossel(direcao) {
     const carrossel = document.getElementById("carrossel");
     const maxScroll = carrossel.scrollWidth - carrossel.clientWidth;
 
+
     posicaoCarrossel += direcao * larguraItem;
+
 
     if (posicaoCarrossel > maxScroll) {
       posicaoCarrossel = 0;
@@ -56,13 +66,16 @@
       posicaoCarrossel = maxScroll;
     }
 
+
     animarScroll(carrossel, posicaoCarrossel, 300); // duração 300ms
   }
+
 
   function animarScroll(element, to, duration) {
     const start = element.scrollLeft;
     const change = to - start;
     const startTime = performance.now();
+
 
     function animate(time) {
       const elapsed = time - startTime;
@@ -74,12 +87,16 @@
       }
     }
 
+
     requestAnimationFrame(animate);
   }
+
 
   function easeInOutQuad(t) {
     return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
   }
+
+
 
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -99,6 +116,7 @@
               window.location.href = '/html/login.html';
             });
 
+
     document.getElementById("btnLogout").addEventListener("click", () => {
       fetch("/logout", {
         method: "POST",
@@ -110,6 +128,7 @@
               .catch(console.error);
     });
 
+
     fetch("/home/carrossel")
             .then(response => response.json())
             .then(jogos => {
@@ -118,12 +137,15 @@
                 const item = document.createElement("div");
                 item.className = "carrossel-item";
 
+
                 const img = document.createElement("img");
                 img.src = jogo.imagemUrl || 'https://via.placeholder.com/400x280?text=Sem+imagem';
                 img.alt = jogo.nome;
 
+
                 const nome = document.createElement("p");
                 nome.textContent = jogo.nome;
+
 
                 item.appendChild(img);
                 item.appendChild(nome);
@@ -134,6 +156,7 @@
               });
             });
 
+
     fetch("/home/destaque")
             .then(response => response.json())
             .then(jogos => {
@@ -142,12 +165,15 @@
                 const card = document.createElement("div");
                 card.className = "jogo-card";
 
+
                 const img = document.createElement("img");
                 img.src = jogo.imagemUrl || 'https://via.placeholder.com/200x150?text=Sem+imagem';
                 img.alt = jogo.nome;
 
+
                 const nome = document.createElement("p");
                 nome.textContent = jogo.nome;
+
 
                 card.appendChild(img);
                 card.appendChild(nome);
@@ -163,10 +189,12 @@
   const perfilDropdown = document.querySelector('.perfil-dropdown');
   const perfilLink = perfilDropdown.querySelector('a');
 
+
   perfilLink.addEventListener('click', function(event) {
     event.preventDefault();
     perfilDropdown.classList.toggle('active');
   });
+
 
   document.addEventListener('click', function(event) {
     if (!perfilDropdown.contains(event.target)) {
@@ -174,6 +202,7 @@
     }
   });
 </script>
+
 
 </body>
 </html>
