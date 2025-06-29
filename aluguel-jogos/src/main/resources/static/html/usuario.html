@@ -210,7 +210,28 @@
                 if (data.foto) {
                     document.getElementById("fotoPreview").src = `/imagens/${data.foto}`;
                 }
-            })
+                 // Carregar histórico logo após carregar usuário
+                fetch(`/usuarios/historico?usuarioId=${data.id}`, { credentials: 'include' })
+                    .then(res => res.json())
+                    .then(historico => {
+                        const div = document.getElementById('historico-jogos');
+                        if (historico.length === 0) {
+                            div.innerHTML = '<p>Nenhum histórico encontrado.</p>';
+                            return;
+                        }
+                        div.innerHTML = historico.map(item => `
+                            <div>
+                                <strong>${item.nome_jogo}</strong><br>
+                                Início: ${item.data_inicio} <br>
+                                Fim: ${item.data_fim ? item.data_fim : 'Em andamento'}
+                            </div>
+                            <hr>
+                        `).join('');
+                    })
+                    .catch(() => {
+                        document.getElementById('historico-jogos').innerHTML = '<p>Erro ao carregar histórico.</p>';
+                    });
+                })
             .catch(() => {
                 window.location.href = '/html/login.html';
             });
