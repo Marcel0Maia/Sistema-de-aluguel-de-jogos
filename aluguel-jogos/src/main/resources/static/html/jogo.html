@@ -227,6 +227,12 @@
                             console.error(error);
                             alert("Erro ao alugar o jogo.");
                         });
+                     fetch("/jogos/historico", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(aluguel),
+                        credentials: "include"
+                      });
                 });
 
 
