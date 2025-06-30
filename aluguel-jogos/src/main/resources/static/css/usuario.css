@@ -87,3 +87,80 @@
     padding: 5px;
     margin-bottom: 10px;
 }
+.search-bar {
+  position: relative; /* importante para dropdown absoluto */
+  display: inline-block;
+  width: 200px;
+}
+
+.search-bar input[type="text"] {
+  width: 100%;
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search-bar input[type="text"]:focus {
+  border-color: #007bff;
+}
+
+.search-dropdown-menu {
+  position: absolute;
+  top: 100%; /* logo abaixo do input */
+  left: 0;
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  max-height: 300px;
+  overflow-y: auto;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-dropdown-menu.active {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Estilo para itens no dropdown */
+.search-dropdown-menu .jogo-card {
+  padding: 6px 12px;
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+
+.search-dropdown-menu .jogo-card:last-child {
+  border-bottom: none;
+}
+
+.search-dropdown-menu .jogo-card:hover {
+  background-color: #f0f0f0;
+}
+
+.search-dropdown-menu .jogo-card img {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.search-dropdown-menu .jogo-card p {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

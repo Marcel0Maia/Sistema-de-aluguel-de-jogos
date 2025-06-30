@@ -345,3 +345,104 @@ h1 {
 .btn-cancelar:hover {
     background-color: #c82333;
 }
+
+.mensagem {
+    position: fixed;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    z-index: 1000;
+    display: none;
+    max-width: 90%;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.mensagem.sucesso {
+    background-color: #4BB543; /* verde */
+}
+
+.mensagem.erro {
+    background-color: #E74C3C; /* vermelho */
+}
+
+.search-bar {
+    position: relative;
+    display: inline-block;
+    z-index: 1500;
+}
+
+.search-dropdown-menu {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 8px;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    padding: 8px 0;
+    min-width: 220px;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    display: flex;
+    flex-direction: column; /* empilha verticalmente */
+    transition: opacity 0.3s ease;
+    z-index: 2000;
+}
+
+.search-dropdown-menu.active {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Cada card ocupa toda a largura do dropdown e é flex para imagem + texto */
+.search-dropdown-menu .jogo-card {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    cursor: pointer;
+    border: none;
+    box-shadow: none;
+    margin-bottom: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.search-dropdown-menu .jogo-card:last-child {
+    margin-bottom: 0;
+}
+
+.search-dropdown-menu .jogo-card:hover {
+    background-color: #f0f0f0;
+    transform: none;
+}
+
+.search-dropdown-menu .jogo-card img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.search-dropdown-menu .jogo-card p {
+    margin: 0;
+    font-weight: normal;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

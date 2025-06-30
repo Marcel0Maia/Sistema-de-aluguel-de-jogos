@@ -77,4 +77,9 @@ public class JogoController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao registrar histórico: " + e.getMessage());
         }
     }
+    @GetMapping("/buscar")
+    public List<Jogo> buscarPorNome(@RequestParam String nome) {
+        return jogoRepository.findByNomeContainingIgnoreCase(nome);
+    }
+
 }

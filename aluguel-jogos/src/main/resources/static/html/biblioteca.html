@@ -20,12 +20,12 @@
             </div>
         </div>
         <a href="biblioteca.html">Biblioteca</a>
-        <a href="#">Categoria</a>
     </div>
 
 
     <div class="search-bar">
-        <label><input type="text" placeholder="Buscar"></label>
+        <label><input type="text" placeholder="Buscar" id="search-input"></label>
+        <div id="search-results" class="search-results"></div>
     </div>
 </div>
 
@@ -72,6 +72,7 @@
         </div>
     </div>
 </div>
+<div id="mensagem" class="mensagem" style="display:none;"></div>
 
 
 <script>
@@ -206,13 +207,23 @@
                 if (!resposta.ok) throw new Error("Erro ao estender aluguel.");
 
 
-                alert("Aluguel estendido com sucesso!");
+                mostrarMensagem("Aluguel estendido com sucesso!", "sucesso");
                 modal.style.display = "none";
                 carregarBiblioteca();
             } catch (error) {
-                alert(error.message);
+                mostrarMensagem(error.message, "erro");
             }
         });
+        function mostrarMensagem(texto, tipo = 'sucesso') {
+            const msgDiv = document.getElementById('mensagem');
+            msgDiv.textContent = texto;
+            msgDiv.className = 'mensagem ' + tipo;
+            msgDiv.style.display = 'block';
+
+            setTimeout(() => {
+                msgDiv.style.display = 'none';
+            }, 4000);
+        }
 
 
         document.querySelectorAll('input[name="tempo-estender"]').forEach(radio => {
@@ -283,6 +294,71 @@
             return diff;
         }
     });
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+
+        // Função debounce para evitar muitas requisições
+        function debounce(fn, delay) {
+          let timer;
+          return function(...args) {
+            clearTimeout(timer);
+            timer = setTimeout(() => fn.apply(this, args), delay);
+          };
+        }
+
+        // Função para buscar jogos no backend (API fictícia)
+        async function buscarJogos(termo) {
+          if (termo.length === 0) {
+            searchResults.innerHTML = '';
+            searchResults.classList.remove('active');
+            return;
+          }
+
+          try {
+            // Substitua essa URL pelo endpoint real que busca jogos por nome
+            const resposta = await fetch(`/jogos/buscar?nome=${encodeURIComponent(termo)}`, { credentials: 'include' });
+            if (!resposta.ok) throw new Error('Erro na busca');
+            const jogos = await resposta.json();
+
+            if (jogos.length === 0) {
+              searchResults.innerHTML = `<div class="item">Nenhum jogo encontrado.</div>`;
+            } else {
+            searchResults.innerHTML = jogos.map(jogo =>
+              `<div class="jogo-card" data-id="${jogo.id}">
+                 <img src="${jogo.imagemUrl}" alt="${jogo.nome}">
+                 <p>${jogo.nome}</p>
+               </div>`
+            ).join('');
+                        }
+            searchResults.classList.add('active');
+          } catch (error) {
+            searchResults.innerHTML = `<div class="item">Erro na busca.</div>`;
+            searchResults.classList.add('active');
+          }
+        }
+
+        // Debounce para limitar chamadas
+        const debouncedBuscar = debounce(() => buscarJogos(searchInput.value.trim()), 300);
+
+        searchInput.addEventListener('input', debouncedBuscar);
+
+        searchResults.addEventListener('click', e => {
+          // Procura o elemento pai com a classe 'jogo-card', caso clique em filhos dentro dele
+          const jogoCard = e.target.closest('.jogo-card');
+          if (jogoCard && jogoCard.dataset.id) {
+            const jogoId = jogoCard.dataset.id;
+            window.location.href = `/html/jogo.html?id=${jogoId}`;
+          }
+        });
+
+
+        // Fecha o dropdown ao clicar fora
+        document.addEventListener('click', e => {
+          if (!searchResults.contains(e.target) && e.target !== searchInput) {
+            searchResults.classList.remove('active');
+          }
+        });
+
 </script>
 </body>
 </html>

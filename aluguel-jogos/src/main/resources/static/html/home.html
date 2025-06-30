@@ -22,15 +22,17 @@
 
 
     <a href="biblioteca.html">Biblioteca</a>
-    <a href="#">Categoria</a>
   </div>
 
 
   <div class="search-bar">
     <label>
-      <input type="text" placeholder="Buscar">
+      <input type="text" placeholder="Buscar" id="search-input">
     </label>
+    <!-- Dropdown de resultados -->
+    <div id="search-dropdown" class="search-dropdown-menu"></div>
   </div>
+
 
 
 </div>
@@ -49,158 +51,222 @@
 
 <script>
   let posicaoCarrossel = 0;
-  const larguraItem = 420; // largura do item + margem direita (400 + 20)
+const larguraItem = 420; // largura do item + margem direita (400 + 20)
 
+function moverCarrossel(direcao) {
+  const carrossel = document.getElementById("carrossel");
+  const maxScroll = carrossel.scrollWidth - carrossel.clientWidth;
 
-  function moverCarrossel(direcao) {
-    const carrossel = document.getElementById("carrossel");
-    const maxScroll = carrossel.scrollWidth - carrossel.clientWidth;
+  posicaoCarrossel += direcao * larguraItem;
 
-
-    posicaoCarrossel += direcao * larguraItem;
-
-
-    if (posicaoCarrossel > maxScroll) {
-      posicaoCarrossel = 0;
-    } else if (posicaoCarrossel < 0) {
-      posicaoCarrossel = maxScroll;
-    }
-
-
-    animarScroll(carrossel, posicaoCarrossel, 300); // duração 300ms
+  if (posicaoCarrossel > maxScroll) {
+    posicaoCarrossel = 0;
+  } else if (posicaoCarrossel < 0) {
+    posicaoCarrossel = maxScroll;
   }
 
+  animarScroll(carrossel, posicaoCarrossel, 300); // duração 300ms
+}
 
-  function animarScroll(element, to, duration) {
-    const start = element.scrollLeft;
-    const change = to - start;
-    const startTime = performance.now();
+function animarScroll(element, to, duration) {
+  const start = element.scrollLeft;
+  const change = to - start;
+  const startTime = performance.now();
 
+  function animate(time) {
+    const elapsed = time - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    // função easeInOutQuad para suavizar
+    element.scrollLeft = easeInOutQuad(progress) * change + start;
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    }
+  }
 
-    function animate(time) {
-      const elapsed = time - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      // função easeInOutQuad para suavizar
-      element.scrollLeft = easeInOutQuad(progress) * change + start;
-      if (progress < 1) {
-        requestAnimationFrame(animate);
+  requestAnimationFrame(animate);
+}
+
+function easeInOutQuad(t) {
+  return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Busca dados do usuário logado
+  fetch('/usuarios/usuario-logado', { credentials: 'include' })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Não autenticado');
       }
-    }
-
-
-    requestAnimationFrame(animate);
-  }
-
-
-  function easeInOutQuad(t) {
-    return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-  }
-
-
-
-
-  document.addEventListener("DOMContentLoaded", function () {
-    fetch('/usuarios/usuario-logado', { credentials: 'include' })
-            .then(response => {
-              if (!response.ok) {
-                throw new Error('Não autenticado');
-              }
-              return response.json();
-            })
-            .then(data => {
-              if (data) {
-                document.getElementById('usuario-nome').textContent = `Olá, ${data.nome}`;
-              }
-            })
-            .catch(() => {
-              window.location.href = '/html/login.html';
-            });
-
-
-    document.getElementById("btnLogout").addEventListener("click", () => {
-      fetch("/logout", {
-        method: "POST",
-        credentials: "include"
-      })
-              .then(() => {
-                window.location.href = "/html/login.html"; // redireciona para login
-              })
-              .catch(console.error);
+      return response.json();
+    })
+    .then(data => {
+      if (data) {
+        document.getElementById('usuario-nome').textContent = `Olá, ${data.nome}`;
+      }
+    })
+    .catch(() => {
+      window.location.href = '/html/login.html';
     });
 
-
-    fetch("/home/carrossel")
-            .then(response => response.json())
-            .then(jogos => {
-              const carrossel = document.getElementById("carrossel");
-              jogos.forEach(jogo => {
-                const item = document.createElement("div");
-                item.className = "carrossel-item";
-
-
-                const img = document.createElement("img");
-                img.src = jogo.imagemUrl || 'https://via.placeholder.com/400x280?text=Sem+imagem';
-                img.alt = jogo.nome;
-
-
-                const nome = document.createElement("p");
-                nome.textContent = jogo.nome;
-
-
-                item.appendChild(img);
-                item.appendChild(nome);
-                item.addEventListener('click', () => {
-                  window.location.href = `/html/jogo.html?id=${jogo.id}`;
-                });
-                carrossel.appendChild(item);
-              });
-            });
-
-
-    fetch("/home/destaque")
-            .then(response => response.json())
-            .then(jogos => {
-              const container = document.getElementById("jogos-container");
-              jogos.forEach(jogo => {
-                const card = document.createElement("div");
-                card.className = "jogo-card";
-
-
-                const img = document.createElement("img");
-                img.src = jogo.imagemUrl || 'https://via.placeholder.com/200x150?text=Sem+imagem';
-                img.alt = jogo.nome;
-
-
-                const nome = document.createElement("p");
-                nome.textContent = jogo.nome;
-
-
-                card.appendChild(img);
-                card.appendChild(nome);
-                card.addEventListener('click', () => {
-                  window.location.href = `/html/jogo.html?id=${jogo.id}`;
-                });
-                container.appendChild(card);
-              });
-            });
-  });
-</script>
-<script>
-  const perfilDropdown = document.querySelector('.perfil-dropdown');
-  const perfilLink = perfilDropdown.querySelector('a');
-
-
-  perfilLink.addEventListener('click', function(event) {
-    event.preventDefault();
-    perfilDropdown.classList.toggle('active');
+  // Evento logout
+  document.getElementById("btnLogout").addEventListener("click", () => {
+    fetch("/logout", {
+      method: "POST",
+      credentials: "include"
+    })
+      .then(() => {
+        window.location.href = "/html/login.html"; // redireciona para login
+      })
+      .catch(console.error);
   });
 
+  // Carrega jogos do carrossel
+  fetch("/home/carrossel")
+    .then(response => response.json())
+    .then(jogos => {
+      const carrossel = document.getElementById("carrossel");
+      jogos.forEach(jogo => {
+        const item = document.createElement("div");
+        item.className = "carrossel-item";
 
-  document.addEventListener('click', function(event) {
-    if (!perfilDropdown.contains(event.target)) {
-      perfilDropdown.classList.remove('active');
-    }
+        const img = document.createElement("img");
+        img.src = jogo.imagemUrl || 'https://via.placeholder.com/400x280?text=Sem+imagem';
+        img.alt = jogo.nome;
+
+        const nome = document.createElement("p");
+        nome.textContent = jogo.nome;
+
+        item.appendChild(img);
+        item.appendChild(nome);
+        item.addEventListener('click', () => {
+          window.location.href = `/html/jogo.html?id=${jogo.id}`;
+        });
+        carrossel.appendChild(item);
+      });
+    });
+
+  // Carrega jogos em destaque
+  fetch("/home/destaque")
+    .then(response => response.json())
+    .then(jogos => {
+      const container = document.getElementById("jogos-container");
+      jogos.forEach(jogo => {
+        const card = document.createElement("div");
+        card.className = "jogo-card";
+
+        const img = document.createElement("img");
+        img.src = jogo.imagemUrl || 'https://via.placeholder.com/200x150?text=Sem+imagem';
+        img.alt = jogo.nome;
+
+        const nome = document.createElement("p");
+        nome.textContent = jogo.nome;
+
+        card.appendChild(img);
+        card.appendChild(nome);
+        card.addEventListener('click', () => {
+          window.location.href = `/html/jogo.html?id=${jogo.id}`;
+        });
+        container.appendChild(card);
+      });
+    });
+});
+
+// Função para criar o card do jogo no dropdown da busca
+function criarCardJogo(jogo) {
+  const card = document.createElement("div");
+  card.className = "jogo-card";
+
+  const img = document.createElement("img");
+  img.src = jogo.imagemUrl || 'https://via.placeholder.com/50x50?text=?';
+  img.alt = jogo.nome;
+
+  const nome = document.createElement("p");
+  nome.textContent = jogo.nome;
+
+  card.appendChild(img);
+  card.appendChild(nome);
+
+  card.addEventListener('click', () => {
+    window.location.href = `/html/jogo.html?id=${jogo.id}`;
   });
+
+  return card;
+}
+
+// Função debounce para evitar muitas chamadas API em digitação rápida
+function debounce(func, delay) {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
+const searchInput = document.getElementById("search-input");
+const searchResults = document.getElementById("search-dropdown");
+
+const buscarJogos = debounce(() => {
+  const termo = searchInput.value.trim();
+
+  if (termo.length === 0) {
+    searchResults.innerHTML = '';
+    searchResults.classList.remove('active');
+    return;
+  }
+
+  fetch(`/jogos/buscar?nome=${encodeURIComponent(termo)}`)
+    .then(response => response.json())
+    .then(jogos => {
+      searchResults.innerHTML = '';
+      searchResults.classList.add('active');
+
+      if (jogos.length === 0) {
+        const msg = document.createElement("p");
+        msg.textContent = "Nenhum jogo encontrado.";
+        msg.style.padding = "6px";
+        searchResults.appendChild(msg);
+      } else {
+        jogos.forEach(jogo => {
+          const card = criarCardJogo(jogo);
+          searchResults.appendChild(card);
+        });
+      }
+    })
+    .catch(console.error);
+}, 400);
+
+searchInput.addEventListener("input", buscarJogos);
+
+// Previne fechar o dropdown se clicar dentro da barra de busca
+searchInput.addEventListener('click', function (event) {
+  event.stopPropagation();
+});
+
+// Fecha o dropdown se clicar fora da search-bar
+document.addEventListener('click', function (event) {
+  const isClickInside = document.querySelector('.search-bar').contains(event.target);
+  if (!isClickInside) {
+    searchResults.classList.remove('active');
+    searchResults.innerHTML = '';
+  }
+});
+
+
+// Dropdown do perfil
+const perfilDropdown = document.querySelector('.perfil-dropdown');
+const perfilLink = perfilDropdown.querySelector('a');
+
+perfilLink.addEventListener('click', function(event) {
+  event.preventDefault();
+  perfilDropdown.classList.toggle('active');
+});
+
+document.addEventListener('click', function(event) {
+  if (!perfilDropdown.contains(event.target)) {
+    perfilDropdown.classList.remove('active');
+  }
+});
+
 </script>
 
 

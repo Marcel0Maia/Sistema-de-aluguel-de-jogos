@@ -1,22 +1,36 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    margin-top: 55px;
+/* Reset box-sizing para todos os elementos */
+* {
+    box-sizing: border-box;
 }
 
+/* Altura total e prevenção de overflow horizontal */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background: #f9f9f9;
+    font-family: Arial, sans-serif;
+}
 
+/* Espaço para navbar fixa */
+body {
+    padding-top: 80px; /* ajuste conforme a altura da navbar */
+    margin: 20px;
+}
+
+/* Título centralizado */
 h1 {
     text-align: center;
 }
 
-
+/* Navbar fixa no topo */
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
-
 
     background-color: white;
     padding: 12px 24px;
@@ -28,7 +42,7 @@ h1 {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-
+/* Input da navbar */
 .navbar input[type="text"] {
     padding: 8px 14px;
     border-radius: 20px;
@@ -39,18 +53,17 @@ h1 {
     transition: border-color 0.3s ease;
 }
 
-
 .navbar input[type="text"]:focus {
     border-color: #007bff;
 }
 
-
+/* Container dos links na navbar */
 .navbar div {
     display: flex;
     gap: 16px; /* Espaço entre os links */
 }
 
-
+/* Links da navbar */
 .navbar a {
     text-decoration: none;
     color: #333;
@@ -60,18 +73,16 @@ h1 {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-
 .navbar a:hover {
     background-color: #007bff;
     color: white;
 }
 
-
+/* Dropdown perfil */
 .perfil-dropdown {
     position: relative;
     display: inline-block;
 }
-
 
 .perfil-dropdown > a {
     text-decoration: none;
@@ -83,14 +94,12 @@ h1 {
     cursor: pointer;
 }
 
-
 .perfil-dropdown > a:hover {
     background-color: #007bff;
     color: white;
 }
 
-
-/* Menu oculto */
+/* Menu oculto do dropdown */
 .perfil-dropdown .dropdown-menu {
     display: none;
     position: absolute;
@@ -104,12 +113,11 @@ h1 {
     min-width: 180px;
     white-space: nowrap;
     z-index: 1001;
-    flex-direction: column;
+    /* sem alterações no gap ou flex */
 }
 
-
 .perfil-dropdown.active .dropdown-menu {
-    display: block;
+    display: block; /* Use block para manter o comportamento original */
 }
 
 
@@ -118,7 +126,6 @@ h1 {
     font-weight: bold;
 }
 
-
 .dropdown-menu a {
     display: block;
     color: #007bff;
@@ -126,11 +133,9 @@ h1 {
     margin-bottom: 8px;
 }
 
-
 .dropdown-menu a:hover {
     text-decoration: underline;
 }
-
 
 .dropdown-menu button {
     width: 100%;
@@ -143,14 +148,11 @@ h1 {
     cursor: pointer;
 }
 
-
 .dropdown-menu button:hover {
     background-color: #cc0000;
 }
 
-
-
-
+/* Container dos jogos alugados */
 .biblioteca-container {
     display: flex;
     flex-wrap: wrap;
@@ -159,9 +161,10 @@ h1 {
     margin-top: 30px;
 }
 
-
+/* Card de jogo alugado */
 .jogo-alugado {
     width: 200px;
+    max-width: 100%;
     text-align: center;
     border: 1px solid #ccc;
     border-radius: 12px;
@@ -171,11 +174,9 @@ h1 {
     background-color: white;
 }
 
-
 .jogo-alugado:hover {
     transform: scale(1.05);
 }
-
 
 .jogo-alugado .jogo-img {
     width: 100%;
@@ -185,24 +186,20 @@ h1 {
     border-radius: 8px;
 }
 
-
 .jogo-alugado .jogo-info {
     margin-top: 10px;
 }
-
 
 .jogo-alugado .jogo-info h3 {
     font-size: 16px;
     margin-bottom: 6px;
 }
 
-
 .jogo-alugado .jogo-info p {
     font-size: 14px;
     color: #555;
     margin-bottom: 8px;
 }
-
 
 .jogo-alugado button {
     padding: 6px 12px;
@@ -216,11 +213,9 @@ h1 {
     transition: background-color 0.3s ease;
 }
 
-
 .jogo-alugado button:hover {
     background-color: #0056b3;
 }
-
 
 /* Modal básico */
 .modal {
@@ -237,7 +232,7 @@ h1 {
     width: 90%;
 }
 
-
+/* Imagem do jogo dentro do modal */
 .modal-content img.modal-jogo-img {
     width: 100%;
     max-height: 140px;
@@ -246,32 +241,30 @@ h1 {
     margin-bottom: 15px;
 }
 
-
+/* Opções do aluguel no modal */
 .aluguel-opcoes label {
     display: block;
     margin-bottom: 8px;
     cursor: pointer;
 }
 
-
 .aluguel-opcoes input[type="radio"] {
     margin-right: 8px;
 }
 
-
+/* Valor total aluguel */
 .total-aluguel {
     font-weight: bold;
     margin: 15px 0;
     font-size: 1.2em;
 }
 
-
+/* Botões do modal */
 .modal-buttons {
     display: flex;
     justify-content: space-between;
     gap: 10px;
 }
-
 
 .modal-buttons button {
     flex: 1;
@@ -282,24 +275,155 @@ h1 {
     cursor: pointer;
 }
 
-
 #btnConfirmarEstender {
     background-color: #28a745;
     color: white;
 }
 
-
 #btnConfirmarEstender:hover {
     background-color: #218838;
 }
-
 
 #btnCancelarEstender {
     background-color: #dc3545;
     color: white;
 }
 
-
 #btnCancelarEstender:hover {
     background-color: #c82333;
+}
+
+.mensagem {
+    position: fixed;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    z-index: 10000;
+    display: none;
+    max-width: 90%;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.mensagem.sucesso {
+    background-color: #4BB543; /* verde */
+}
+
+.mensagem.erro {
+    background-color: #E74C3C; /* vermelho */
+}
+
+/* Search bar container */
+.search-bar {
+    position: relative;
+    display: inline-block;
+    z-index: 1500;
+}
+
+/* Input da search bar */
+.search-bar input[type="text"] {
+    width: 200px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-bar input[type="text"]:focus {
+    border-color: #007bff;
+}
+
+/* Dropdown do search results */
+#search-results {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 8px;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    padding: 8px 0;
+    min-width: 220px;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    display: flex;
+    flex-direction: column;
+    transition: opacity 0.3s ease;
+    z-index: 2000;
+}
+
+/* Mostrar dropdown ativo */
+#search-results.active {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Cards dentro do dropdown */
+#search-results .jogo-card {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    cursor: pointer;
+    border: none;
+    box-shadow: none;
+    margin-bottom: 6px;
+    transition: background-color 0.2s ease;
+}
+
+#search-results .jogo-card:last-child {
+    margin-bottom: 0;
+}
+
+#search-results .jogo-card:hover {
+    background-color: #f0f0f0;
+}
+
+/* Imagem pequena no dropdown */
+#search-results .jogo-card img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+/* Nome do jogo no dropdown */
+#search-results .jogo-card p {
+    margin: 0;
+    font-weight: normal;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Para imagens dentro de itens "item" (se houver) */
+.search-results .item img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+/* Garante que todas as imagens não quebrem layout */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
