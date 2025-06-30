@@ -9,4 +9,5 @@ import java.util.List;
 public interface JogoRepository extends JpaRepository<Jogo, Long> {
     List<Jogo> findByEmDestaqueTrue();
     List<Jogo> findByNoCarrosselTrue();
+    List<Jogo> findByNomeContainingIgnoreCase(String nome);
 }

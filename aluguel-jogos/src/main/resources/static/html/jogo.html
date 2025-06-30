@@ -7,7 +7,6 @@
 </head>
 <body>
 
-
 <div class="navbar">
     <div class="nav-links">
         <a href="/html/home.html" title="Início">⌂</a>
@@ -20,12 +19,12 @@
             </div>
         </div>
         <a href="biblioteca.html">Biblioteca</a>
-        <a href="#">Categoria</a>
     </div>
     <div class="search-bar">
         <label>
-            <input type="text" placeholder="Buscar" />
+            <input type="text" placeholder="Buscar" id="search-input" />
         </label>
+        <div id="search-dropdown" class="search-dropdown-menu"></div>
     </div>
 </div>
 
@@ -92,6 +91,7 @@
     </div>
 </div>
 
+<div id="mensagem" class="mensagem" style="display:none;"></div>
 
 <script>
     function obterParametroUrl(nome) {
@@ -219,13 +219,13 @@
                         body: JSON.stringify(aluguel)
                     })
                         .then(response => {
-                            if (!response.ok) throw new Error("Erro ao registrar aluguel.");
-                            alert("Aluguel confirmado com sucesso!");
+                        if (!response.ok) throw new Error("Erro ao registrar aluguel.");
+                            mostrarMensagemSucesso("Aluguel confirmado com sucesso!");
                             modal.classList.remove("active");
                         })
                         .catch(error => {
                             console.error(error);
-                            alert("Erro ao alugar o jogo.");
+                            mostrarMensagemErro("Erro ao alugar o jogo.");
                         });
                      fetch("/jogos/historico", {
                         method: "POST",
@@ -234,6 +234,25 @@
                         credentials: "include"
                       });
                 });
+                function mostrarMensagemSucesso(texto) {
+                    mostrarMensagem(texto, 'sucesso');
+                }
+
+                function mostrarMensagemErro(texto) {
+                    mostrarMensagem(texto, 'erro');
+                }
+
+                function mostrarMensagem(texto, tipo) {
+                    const msgDiv = document.getElementById('mensagem');
+                    msgDiv.textContent = texto;
+                    msgDiv.className = 'mensagem ' + tipo;
+                    msgDiv.style.display = 'block';
+
+                    // Esconde depois de 4 segundos
+                    setTimeout(() => {
+                        msgDiv.style.display = 'none';
+                    }, 4000);
+                }
 
 
                 function atualizarValorTotal() {
@@ -268,6 +287,87 @@
             }
         });
     });
+
+    // Função para criar o card do jogo no dropdown
+    function criarCardJogo(jogo) {
+        const card = document.createElement("div");
+        card.className = "jogo-card";
+
+        const img = document.createElement("img");
+        img.src = jogo.imagemUrl || 'https://via.placeholder.com/50x50?text=?';
+        img.alt = jogo.nome;
+
+        const nome = document.createElement("p");
+        nome.textContent = jogo.nome;
+
+        card.appendChild(img);
+        card.appendChild(nome);
+
+        card.addEventListener('click', () => {
+            window.location.href = `/html/jogo.html?id=${jogo.id}`;
+        });
+
+        return card;
+    }
+
+    // Função debounce para evitar muitas chamadas API em digitação rápida
+    function debounce(func, delay) {
+        let timer;
+        return function (...args) {
+            clearTimeout(timer);
+            timer = setTimeout(() => func.apply(this, args), delay);
+        };
+    }
+
+    const searchInput = document.getElementById("search-input");
+    const searchResults = document.getElementById("search-dropdown");
+
+    const buscarJogos = debounce(() => {
+        const termo = searchInput.value.trim();
+
+        if (termo.length === 0) {
+            searchResults.innerHTML = '';
+            searchResults.classList.remove('active');
+            return;
+        }
+
+        fetch(`/jogos/buscar?nome=${encodeURIComponent(termo)}`)
+            .then(response => response.json())
+            .then(jogos => {
+                searchResults.innerHTML = '';
+                searchResults.classList.add('active');
+
+                if (jogos.length === 0) {
+                    const msg = document.createElement("p");
+                    msg.textContent = "Nenhum jogo encontrado.";
+                    msg.style.padding = "6px";
+                    searchResults.appendChild(msg);
+                } else {
+                    jogos.forEach(jogo => {
+                        const card = criarCardJogo(jogo);
+                        searchResults.appendChild(card);
+                    });
+                }
+            })
+            .catch(console.error);
+    }, 400);
+
+    searchInput.addEventListener("input", buscarJogos);
+
+    // Previne fechar o dropdown se clicar dentro da barra de busca
+    searchInput.addEventListener('click', function (event) {
+        event.stopPropagation();
+    });
+
+    // Fecha o dropdown se clicar fora da search-bar
+    document.addEventListener('click', function (event) {
+        const isClickInside = document.querySelector('.search-bar').contains(event.target);
+        if (!isClickInside) {
+            searchResults.classList.remove('active');
+            searchResults.innerHTML = '';
+        }
+    });
+
 </script>
 
 

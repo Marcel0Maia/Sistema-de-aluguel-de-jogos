@@ -136,11 +136,12 @@
             </div>
         </div>
         <a href="biblioteca.html">Biblioteca</a>
-        <a href="#">Categoria</a>
     </div>
     <div class="search-bar">
-        <label><input type="text" placeholder="Buscar"></label>
+        <input type="text" id="search-input" placeholder="Buscar" autocomplete="off" />
+        <div id="search-dropdown" class="search-dropdown-menu"></div>
     </div>
+
 </div>
 
 
@@ -314,6 +315,82 @@
                 });
         });
     });
+    // Função debounce para evitar muitas requisições
+function debounce(func, delay) {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
+const searchInput = document.getElementById("search-input");
+const searchResults = document.getElementById("search-dropdown");
+
+function criarCardJogo(jogo) {
+  const card = document.createElement("div");
+  card.className = "jogo-card";
+
+  const img = document.createElement("img");
+  img.src = jogo.imagemUrl || 'https://via.placeholder.com/40x40?text=?';
+  img.alt = jogo.nome;
+
+  const nome = document.createElement("p");
+  nome.textContent = jogo.nome;
+
+  card.appendChild(img);
+  card.appendChild(nome);
+
+  card.addEventListener('click', () => {
+    window.location.href = `/html/jogo.html?id=${jogo.id}`;
+  });
+
+  return card;
+}
+
+const buscarJogos = debounce(() => {
+  const termo = searchInput.value.trim();
+
+  if (termo.length === 0) {
+    searchResults.innerHTML = '';
+    searchResults.classList.remove('active');
+    return;
+  }
+
+  fetch(`/jogos/buscar?nome=${encodeURIComponent(termo)}`)
+    .then(response => response.json())
+    .then(jogos => {
+      searchResults.innerHTML = '';
+      searchResults.classList.add('active');
+
+      if (jogos.length === 0) {
+        const msg = document.createElement("p");
+        msg.textContent = "Nenhum jogo encontrado.";
+        msg.style.padding = "6px";
+        searchResults.appendChild(msg);
+      } else {
+        jogos.forEach(jogo => {
+          const card = criarCardJogo(jogo);
+          searchResults.appendChild(card);
+        });
+      }
+    })
+    .catch(console.error);
+}, 400);
+
+searchInput.addEventListener("input", buscarJogos);
+
+// Fecha o dropdown se clicar fora da search-bar
+document.addEventListener('click', (event) => {
+  if (!document.querySelector('.search-bar').contains(event.target)) {
+    searchResults.classList.remove('active');
+    searchResults.innerHTML = '';
+  }
+});
+
+// Impede fechar ao clicar dentro da barra de busca
+searchInput.addEventListener('click', (e) => e.stopPropagation());
+
 </script>
 </body>
 </html>

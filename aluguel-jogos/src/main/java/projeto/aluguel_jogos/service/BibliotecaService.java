@@ -7,6 +7,7 @@ import projeto.aluguel_jogos.model.Biblioteca;
 import projeto.aluguel_jogos.repository.BibliotecaRepository;
 
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,10 +48,19 @@ public class BibliotecaService {
     public Biblioteca estenderAluguel(Long id, int dias) {
         Biblioteca b = bibliotecaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Biblioteca não encontrada com id: " + id));
+        // Atualiza a dataFim somando os dias
         b.setDataFim(b.getDataFim().plusDays(dias));
+        // Atualiza o tempoAluguel somando os dias
+        Integer tempoAtual = b.getTempoAluguel() != null ? b.getTempoAluguel() : 0;
+        b.setTempoAluguel(tempoAtual + dias);
         return bibliotecaRepository.save(b);
     }
 
+
+    public void removerAlugueisExpirados() {
+        LocalDate hoje = LocalDate.now();
+        bibliotecaRepository.deleteByDataFimBefore(hoje);
+    }
 
     // Deletar um item da biblioteca pelo id
     public void deletar(Long id) {

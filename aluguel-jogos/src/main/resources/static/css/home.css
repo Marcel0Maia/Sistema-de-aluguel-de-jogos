@@ -18,9 +18,9 @@ h1 {
     background-color: white;
     padding: 12px 24px;
     display: flex;
-    justify-content: flex-start; /* Alinha os itens à esquerda */
+    justify-content: flex-start;
     align-items: center;
-    gap: 40px; /* Espaço entre os dois grupos (input e links) */
+    gap: 40px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
 }
@@ -41,7 +41,7 @@ h1 {
 
 .navbar div {
     display: flex;
-    gap: 16px; /* Espaço entre os links */
+    gap: 16px;
 }
 
 .navbar a {
@@ -82,7 +82,7 @@ h1 {
 .perfil-dropdown .dropdown-menu {
     display: none;
     position: absolute;
-    top: 100%; /* abaixo do link */
+    top: 100%;
     left: 0;
     margin-top: 8px;
     background-color: white;
@@ -130,7 +130,6 @@ h1 {
     background-color: #cc0000;
 }
 
-
 /* Container do carrossel */
 .carrossel-container {
     display: flex;
@@ -143,14 +142,14 @@ h1 {
 .carrossel {
     display: flex;
     overflow: hidden;
-    width: 420px; /* largura exata de um item + margem */
+    width: 420px;
     justify-content: flex-start;
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
 }
 
 .carrossel-item {
-    flex: 0 0 400px; /* largura do item */
+    flex: 0 0 400px;
     scroll-snap-align: center;
     text-align: center;
     margin-right: 20px;
@@ -214,4 +213,83 @@ h1 {
 .jogo-card p {
     margin-top: 10px;
     font-weight: bold;
+}
+
+/* Barra de busca */
+.search-bar {
+    position: relative;
+    display: inline-block;
+    z-index: 1500;
+}
+
+/* Dropdown da busca */
+.search-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 8px;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    padding: 8px 0;
+    min-width: 220px;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+
+    /* Use flex com coluna para empilhar verticalmente */
+    display: flex;
+    flex-direction: column;
+    z-index: 2000;
+}
+
+/* Quando ativo, fica visível */
+.search-dropdown-menu.active {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Cards no dropdown empilhados verticalmente */
+.search-dropdown-menu .jogo-card {
+    width: 100%;
+    display: flex;       /* imagem + texto lado a lado */
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    cursor: pointer;
+    border: none;
+    box-shadow: none;
+    margin-bottom: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.search-dropdown-menu .jogo-card:last-child {
+    margin-bottom: 0;
+}
+
+.search-dropdown-menu .jogo-card:hover {
+    background-color: #f0f0f0;
+    transform: none;
+}
+
+.search-dropdown-menu .jogo-card img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.search-dropdown-menu .jogo-card p {
+    margin: 0;
+    font-weight: normal;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
