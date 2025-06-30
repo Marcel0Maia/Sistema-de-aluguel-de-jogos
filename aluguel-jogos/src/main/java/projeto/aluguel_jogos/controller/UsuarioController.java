@@ -4,11 +4,14 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import projeto.aluguel_jogos.model.Usuario;
 import projeto.aluguel_jogos.repository.UsuarioRepository;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -17,6 +20,8 @@ import java.util.Optional;
 public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
     @GetMapping
     public List<Usuario> listarUsuarios() {
         return usuarioRepository.findAll();
@@ -89,5 +94,24 @@ public class UsuarioController {
         usuarioRepository.save(usuario);
 
         return ResponseEntity.ok().build();
+    }
+    @GetMapping("/historico")
+    @ResponseBody
+    public List<Map<String, Object>> getHistoricoDoUsuario(@RequestParam Long usuarioId) {
+        String sql = """
+            SELECT h.data_inicio, h.data_fim, j.nome AS nome_jogo
+            FROM HISTORICO h
+            JOIN JOGO j ON h.jogo_id = j.id
+            WHERE h.usuario_id = ?
+            ORDER BY h.data_inicio DESC
+        """;
+
+        return jdbcTemplate.query(sql, new Object[]{usuarioId}, (rs, rowNum) -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("nome_jogo", rs.getString("nome_jogo"));
+            map.put("data_inicio", rs.getDate("data_inicio").toString());
+            map.put("data_fim", rs.getDate("data_fim") != null ? rs.getDate("data_fim").toString() : null);
+            return map;
+        });
     }
 }

@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="72fc84cc-9868-48e0-b75e-5bfb7b79dda5" name="Changes" comment="Alterações para adição de novo atributo &quot;tempo_de_aluguel&quot; na tabela USUARIOS_JOGOS.">
+    <list default="true" id="72fc84cc-9868-48e0-b75e-5bfb7b79dda5" name="Changes" comment="uncovered">
+      <change afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/service/HistoricoService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/controller/BibliotecaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/controller/BibliotecaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/model/Biblioteca.java" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/model/Biblioteca.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/repository/BibliotecaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/repository/BibliotecaRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/css/jogo.css" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/css/jogo.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/html/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/html/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/controller/JogoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/controller/JogoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/controller/UsuarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/controller/UsuarioController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/html/jogo.html" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/html/jogo.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/html/usuario.html" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/html/usuario.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/aluguel-jogos-db.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/aluguel-jogos-db.mv.db" afterDir="false" />
@@ -45,7 +43,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="pagina-jogo" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -69,46 +67,31 @@
   &quot;associatedIndex&quot;: 1
 }</component>
   <component name="ProjectId" id="2xSvRTU3ngUhuwOzSdqpg02RK4H" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="1" id="Add" />
-  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.AluguelJogosApplication.executor": "Run",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "JUnit.AluguelJogosApplicationTests.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.AluguelJogosApplication.executor": "Run",
-    "git-widget-placeholder": "biblioteca-historico-completo",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "pyconsole",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.AluguelJogosApplication.executor&quot;: &quot;Run&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;historico-perfil&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;pyconsole&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Caio\Documents\Github\Sistema-de-aluguel-de-jogos\aluguel-jogos\src\main\resources\static\imagens" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.AluguelJogosApplication">
+  <component name="RunManager">
     <configuration name="AluguelJogosApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="projeto.aluguel_jogos.AluguelJogosApplication" />
       <module name="aluguel-jogos" />
@@ -122,53 +105,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AluguelJogosApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="aluguel-jogos" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="projeto.aluguel_jogos.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="projeto.aluguel_jogos" />
-      <option name="MAIN_CLASS_NAME" value="projeto.aluguel_jogos.AluguelJogosApplicationTests" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AluguelJogosApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <module name="aluguel-jogos" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="projeto.aluguel_jogos.AluguelJogosApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="projeto.aluguel_jogos.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.AluguelJogosApplication" />
-        <item itemvalue="JUnit.AluguelJogosApplicationTests" />
+        <item itemvalue="Application.AluguelJogosApplication" />
+        <item itemvalue="Application.AluguelJogosApplication" />
         <item itemvalue="Application.AluguelJogosApplication" />
         <item itemvalue="Application.AluguelJogosApplication" />
         <item itemvalue="Application.AluguelJogosApplication" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
-        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
-      </set>
-    </attachedChunks>
-  </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="project-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="72fc84cc-9868-48e0-b75e-5bfb7b79dda5" name="Changes" comment="" />
@@ -176,7 +122,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1747944281823</updated>
-      <workItem from="1750880732979" duration="4452000" />
     </task>
     <task id="LOCAL-00001" summary="Adição do Diagrama de Classes ao projeto">
       <option name="closed" value="true" />
@@ -314,11 +259,80 @@
       <option name="project" value="LOCAL" />
       <updated>1750362422444</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Avatares para perfil do usuário.">
+      <option name="closed" value="true" />
+      <created>1750632004147</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1750632004147</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Nova página e Controller para atualização e edição de informações do usuário logado">
+      <option name="closed" value="true" />
+      <created>1750632088243</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1750632088243</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Novo atributo &quot;foto&quot; para cada usuário ter seu próprio avatar">
+      <option name="closed" value="true" />
+      <created>1750632141248</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1750632141248</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Novo metodo para atualizar informações do usuário">
+      <option name="closed" value="true" />
+      <created>1750632184033</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1750632184033</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Nova página de perfil do usuário, para editar avatar, editar informações e ver histórico">
+      <option name="closed" value="true" />
+      <created>1750632247244</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1750632247244</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Novo método para atualizar o avatar do usuário.">
+      <option name="closed" value="true" />
+      <created>1750632284814</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1750632284814</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Novo método para encontrar usuário por ID e Email em caixa baixa">
+      <option name="closed" value="true" />
+      <created>1750632324454</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1750632324454</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Referência para tela de perfil do usuário e botão de refência para própria página para padronizar a barra de navegação">
+      <option name="closed" value="true" />
+      <created>1750632385342</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1750632385342</updated>
+    </task>
+    <task id="LOCAL-00026" summary="uncovered">
+      <option name="closed" value="true" />
+      <created>1750632463631</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1750632463631</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
   </component>
   <component name="UnknownFeatures">
     <option featureType="dependencySupport" implementationName="java:org.springframework:spring-core" />
@@ -365,6 +379,15 @@
     <MESSAGE value="Alteração no redirecionamento das páginas" />
     <MESSAGE value="datas" />
     <MESSAGE value="Alterações para adição de novo atributo &quot;tempo_de_aluguel&quot; na tabela USUARIOS_JOGOS." />
-    <option name="LAST_COMMIT_MESSAGE" value="Alterações para adição de novo atributo &quot;tempo_de_aluguel&quot; na tabela USUARIOS_JOGOS." />
+    <MESSAGE value="Avatares para perfil do usuário." />
+    <MESSAGE value="Nova página e Controller para atualização e edição de informações do usuário logado" />
+    <MESSAGE value="Novo atributo &quot;foto&quot; para cada usuário ter seu próprio avatar" />
+    <MESSAGE value="Novo metodo para atualizar informações do usuário" />
+    <MESSAGE value="Nova página de perfil do usuário, para editar avatar, editar informações e ver histórico" />
+    <MESSAGE value="Novo método para atualizar o avatar do usuário." />
+    <MESSAGE value="Novo método para encontrar usuário por ID e Email em caixa baixa" />
+    <MESSAGE value="Referência para tela de perfil do usuário e botão de refência para própria página para padronizar a barra de navegação" />
+    <MESSAGE value="uncovered" />
+    <option name="LAST_COMMIT_MESSAGE" value="uncovered" />
   </component>
 </project>
