@@ -51,32 +51,6 @@ public class JogoController {
         jogoRepository.deleteById(id);
     }
 
-    @PostMapping("/historico")
-    public ResponseEntity<?> registrarAluguel(@RequestBody Map<String, Object> dados) {
-        try {
-            Map<String, Object> usuario = (Map<String, Object>) dados.get("usuario");
-            Map<String, Object> jogo = (Map<String, Object>) dados.get("jogo");
-            int tempo = (int) dados.get("tempoAluguel");
-
-            Long usuarioId = Long.valueOf(usuario.get("id").toString());
-            Long jogoId = Long.valueOf(jogo.get("id").toString());
-
-            String dataInicioStr = dados.get("dataInicio").toString();
-            String dataFimStr = dados.get("dataFim").toString();
-
-            LocalDate dataInicio = LocalDate.parse(dataInicioStr.substring(0, 10));
-            LocalDate dataFim = LocalDate.parse(dataFimStr.substring(0, 10));
-
-            jdbcTemplate.update("""
-                INSERT INTO HISTORICO (usuario_id, jogo_id, data_inicio, data_fim)
-                VALUES (?, ?, ?, ?)
-            """, usuarioId, jogoId, dataInicio, dataFim);
-
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao registrar histórico: " + e.getMessage());
-        }
-    }
     @GetMapping("/buscar")
     public List<Jogo> buscarPorNome(@RequestParam String nome) {
         return jogoRepository.findByNomeContainingIgnoreCase(nome);

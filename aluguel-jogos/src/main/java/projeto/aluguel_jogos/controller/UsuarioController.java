@@ -95,22 +95,24 @@ public class UsuarioController {
 
         return ResponseEntity.ok().build();
     }
+
     @GetMapping("/historico")
     @ResponseBody
     public List<Map<String, Object>> getHistoricoDoUsuario(@RequestParam Long usuarioId) {
         String sql = """
-            SELECT h.data_inicio, h.data_fim, j.nome AS nome_jogo
-            FROM HISTORICO h
-            JOIN JOGO j ON h.jogo_id = j.id
-            WHERE h.usuario_id = ?
-            ORDER BY h.data_inicio DESC
-        """;
+        SELECT h.data_inicio, h.data_fim, j.nome AS nome_jogo, h.tipo_acao
+        FROM HISTORICO h
+        JOIN JOGO j ON h.jogo_id = j.id
+        WHERE h.usuario_id = ?
+        ORDER BY h.data_inicio DESC
+    """;
 
         return jdbcTemplate.query(sql, new Object[]{usuarioId}, (rs, rowNum) -> {
             Map<String, Object> map = new HashMap<>();
             map.put("nome_jogo", rs.getString("nome_jogo"));
             map.put("data_inicio", rs.getDate("data_inicio").toString());
             map.put("data_fim", rs.getDate("data_fim") != null ? rs.getDate("data_fim").toString() : null);
+            map.put("tipo_acao", rs.getString("tipo_acao")); // <-- adiciona o tipo de ação
             return map;
         });
     }

@@ -7,19 +7,13 @@
     <list default="true" id="72fc84cc-9868-48e0-b75e-5bfb7b79dda5" name="Changes" comment="Alterações para adição de novo atributo &quot;tempo_de_aluguel&quot; na tabela USUARIOS_JOGOS.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/controller/JogoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/controller/JogoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/repository/BibliotecaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/repository/BibliotecaRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/repository/JogoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/repository/JogoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/repository/UsuarioRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/repository/UsuarioRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/service/BibliotecaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/service/BibliotecaService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/css/biblioteca.css" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/css/biblioteca.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/css/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/css/home.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/controller/UsuarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/controller/UsuarioController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/service/HistoricoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/java/projeto/aluguel_jogos/service/HistoricoService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/css/jogo.css" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/css/jogo.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/css/usuario.css" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/css/usuario.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/html/biblioteca.html" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/html/biblioteca.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/html/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/html/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/html/jogo.html" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/html/jogo.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/html/recuperar-senha.html" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/html/recuperar-senha.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/html/usuario.html" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/main/resources/static/html/usuario.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aluguel-jogos/src/test/java/projeto/aluguel_jogos/BibliotecaControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/aluguel-jogos/src/test/java/projeto/aluguel_jogos/BibliotecaControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/aluguel-jogos-db.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/aluguel-jogos-db.mv.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/aluguel-jogos-db.trace.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/aluguel-jogos-db.trace.db" afterDir="false" />
     </list>
@@ -53,7 +47,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="pagina-jogo" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -67,7 +61,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Marcel0Maia/Sistema-de-aluguel-de-jogos.git&quot;,
-    &quot;accountId&quot;: &quot;400ea8f7-8460-4af3-81e8-6fe2291e6b8f&quot;
+    &quot;accountId&quot;: &quot;cf388d48-2169-417c-b50b-18e6def61820&quot;
   }
 }</component>
   <component name="ProblemsViewState">
@@ -89,15 +83,17 @@
     "Application.AluguelJogosApplication.executor": "Run",
     "DefaultHtmlFileTemplate": "HTML File",
     "JUnit.AluguelJogosApplicationTests.executor": "Run",
+    "JUnit.BibliotecaControllerTest.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.AluguelJogosApplication.executor": "Run",
-    "git-widget-placeholder": "historico-perfil",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
@@ -145,6 +141,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="BibliotecaControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="aluguel-jogos" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="projeto.aluguel_jogos.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="projeto.aluguel_jogos" />
+      <option name="MAIN_CLASS_NAME" value="projeto.aluguel_jogos.BibliotecaControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="AluguelJogosApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="aluguel-jogos" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="projeto.aluguel_jogos.AluguelJogosApplication" />
@@ -161,11 +172,20 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.AluguelJogosApplication" />
+        <item itemvalue="JUnit.BibliotecaControllerTest" />
         <item itemvalue="JUnit.AluguelJogosApplicationTests" />
         <item itemvalue="Application.AluguelJogosApplication" />
         <item itemvalue="Application.AluguelJogosApplication" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="project-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
