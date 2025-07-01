@@ -222,11 +222,13 @@
                         div.innerHTML = historico.map(item => `
                             <div>
                                 <strong>${item.nome_jogo}</strong><br>
+                                Ação: <span style="text-transform: capitalize;">${item.tipo_acao?.toLowerCase() || 'desconhecida'}</span><br>
                                 Início: ${item.data_inicio} <br>
                                 Fim: ${item.data_fim ? item.data_fim : 'Em andamento'}
                             </div>
                             <hr>
                         `).join('');
+
                     })
                     .catch(() => {
                         document.getElementById('historico-jogos').innerHTML = '<p>Erro ao carregar histórico.</p>';

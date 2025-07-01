@@ -186,15 +186,9 @@
                     alert("Nenhum aluguel selecionado.");
                     return;
                 }
+
                 const diasExtender = parseInt(document.querySelector('input[name="tempo-estender"]:checked').value);
-
-
-                const dataFimAtual = new Date(aluguelSelecionado.dataFim);
-                dataFimAtual.setDate(dataFimAtual.getDate() + diasExtender);
-
-
                 const corpo = { dias: diasExtender };
-
 
                 const resposta = await fetch(`/biblioteca/estender/${aluguelSelecionado.id}`, {
                     method: "PUT",
@@ -203,9 +197,24 @@
                     credentials: 'include'
                 });
 
-
                 if (!resposta.ok) throw new Error("Erro ao estender aluguel.");
 
+                // Adicionar no histórico após estender com sucesso
+                const novaDataFim = new Date(aluguelSelecionado.dataFim);
+                novaDataFim.setDate(novaDataFim.getDate() + diasExtender);
+
+                await fetch("/historico", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        usuario: { id: usuarioLogado.id },
+                        jogo: { id: aluguelSelecionado.jogo.id },
+                        dataInicio: new Date().toISOString(),
+                        dataFim: novaDataFim.toISOString(),
+                        tipoAcao: "EXTENSAO DE ALUGUEL"
+                    }),
+                    credentials: "include"
+                });
 
                 mostrarMensagem("Aluguel estendido com sucesso!", "sucesso");
                 modal.style.display = "none";
@@ -214,6 +223,7 @@
                 mostrarMensagem(error.message, "erro");
             }
         });
+
         function mostrarMensagem(texto, tipo = 'sucesso') {
             const msgDiv = document.getElementById('mensagem');
             msgDiv.textContent = texto;

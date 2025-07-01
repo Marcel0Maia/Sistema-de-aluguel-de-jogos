@@ -12,8 +12,10 @@ public class HistoricoService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public void registrarHistorico(LocalDate data_fim, LocalDate data_inicio, Long jogo_id, Long usuario_id) {
-        String sql = "INSERT INTO historico (usuario_id, acao, data) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql, data_fim, data_inicio, jogo_id, usuario_id);
+    public void registrarHistorico(LocalDate dataFim, LocalDate dataInicio, Long jogoId, Long usuarioId, String tipoAcao) {
+        String sql = "INSERT INTO historico (usuario_id, jogo_id, data_inicio, data_fim, tipo_acao) VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, usuarioId, jogoId, dataInicio, dataFim, tipoAcao);
     }
+
+
 }
